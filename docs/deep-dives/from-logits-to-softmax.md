@@ -40,7 +40,7 @@ Now write $\theta_j=z_j-z_K$. The previous equations become the full $K$-logit s
 For any constant $c$:
 
 $$
-\operatorname{softmax}(z+c\mathbf 1)=\operatorname{softmax}(z).
+\mathrm{softmax}(z+c\mathbf 1)=\operatorname{softmax}(z).
 $$
 
 Thus the $K$ logits have one redundant degree of freedom: only their differences matter. Fixing $z_K=0$ is an **identifiability convention**, not a restriction on the resulting probability vector. A positive affine transformation with scaling $a\ne1$ generally **does change** the probabilities, so softmax is invariant to common **translations**, not to all affine transformations.
