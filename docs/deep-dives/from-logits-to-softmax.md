@@ -7,7 +7,7 @@
 For $K$ possible classes, a network produces a vector of *logits* $z=(z_1,\dots,z_K)\in\mathbb R^K$. The softmax operation maps these unconstrained real values onto the probability simplex:
 
 $$
-p_j=\operatorname{softmax}(z)_j=\frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}.
+p_j=\mathrm{softmax}(z)_j=\frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}.
 $$
 
 Therefore $p_j>0$ for every class with finite logits and $\sum_j p_j=1$ (in exact arithmetic).
