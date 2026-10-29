@@ -3851,8 +3851,7 @@ We start with the loss for a single observation, expressed directly in terms of 
 
 $$
 \mathcal L=
--\sum_{j=1}^{K}y_jz_j
-+
+-\sum_{j=1}^{K}y_jz_j+
 \ln\left(\sum_{h=1}^{K}e^{z_h}\right)
 $$
 
@@ -4565,9 +4564,7 @@ Under appropriate regularity conditions, the Fisher information matrix can be de
 
 $$
 \boxed{
-I_n(\beta)
-=
--\mathbb E_\beta
+I_n(\beta)=-\mathbb E_\beta
 \left[
 \frac{\partial^2\ell(\beta)}
 {\partial\beta\,\partial\beta^\top}
@@ -4697,8 +4694,7 @@ After observing the sample $\mathcal D$, we apply Bayes' theorem:
 
 $$
 \boxed{
-p(\beta\mid\mathcal D)
-=
+p(\beta\mid\mathcal D)=
 \frac{
 p(\mathcal D\mid\beta)p(\beta)
 }{
@@ -4719,8 +4715,7 @@ The terms represent:
 The posterior distribution combines the information encoded by the prior with that contained in the observed data. The normalizing constant is the evidence:
 
 $$
-p(\mathcal D)
-=
+p(\mathcal D)=
 \int p(\mathcal D\mid\beta)p(\beta)\,d\beta
 $$
 
@@ -4744,8 +4739,7 @@ In the Bayesian approach, instead, we account for parameter uncertainty by integ
 
 $$
 \boxed{
-P(Y_*=j\mid x_*,\mathcal D)
-=
+P(Y_*=j\mid x_*,\mathcal D)=
 \int
 P(Y_*=j\mid x_*,\beta)
 p(\beta\mid\mathcal D)\,d\beta
@@ -4756,8 +4750,7 @@ For a neural classifier parameterized through softmax, we instead use $\psi$ to 
 
 $$
 \boxed{
-P(Y_*=j\mid x_*,\mathcal D)
-=
+P(Y_*=j\mid x_*,\mathcal D)=
 \int
 \mathrm{softmax}(f_\psi(x_*))_j
 p(\psi\mid\mathcal D)\,d\psi
@@ -4841,10 +4834,8 @@ $$
 If we assign equal weight to the two configurations, the mean predictive distribution is:
 
 $$
-\overline{\mathbf p}
-=
-\frac12\mathbf p_{\beta_1}
-+
+\overline{\mathbf p}=
+\frac12\mathbf p_{\beta_1}+
 \frac12\mathbf p_{\beta_2}
 $$
 
@@ -4872,11 +4863,9 @@ Conditional on the data $\mathcal D$ and the covariates $x$, we obtain:
 
 $$
 \boxed{
-\mathrm{Var}(Z\mid x,\mathcal D)
-=
+\mathrm{Var}(Z\mid x,\mathcal D)=
 \underbrace{\mathbb E_{\beta\mid\mathcal D}
-\left[p_\beta(1-p_\beta)\right]}_{\text{mean conditional variability}}
-+
+\left[p_\beta(1-p_\beta)\right]}_{\text{mean conditional variability}}+
 \underbrace{\mathrm{Var}_{\beta\mid\mathcal D}(p_\beta)}_{\text{between-prediction variability}}
 }
 $$
