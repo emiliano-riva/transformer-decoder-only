@@ -2036,8 +2036,15 @@ $$
 Therefore:
 
 $$
-\boxed{\nabla A(\boldsymbol\theta)=\begin{pmatrix}p_1\\p_2\\\vdots\\p_{K-1}\end{pmatrix}}
+\boxed{\nabla A(\boldsymbol\theta)=
+\begin{pmatrix}
+\p_1\\
+\p_2\\
+\vdots\\
+\p_{K-1}
+\end{pmatrix}}
 $$
+
 
 This result is consistent with the definition of the indicator variables.
 
@@ -2591,7 +2598,12 @@ $$
 where:
 
 $$
-\Delta_{K-1}^{\circ}=\left\{\mathbf p\in\mathbb R^K:p_j>0,\ \sum_{j=1}^{K}p_j=1\right\}
+\Delta_{K-1}^{\circ} =
+\left\{
+\mathbf{p}\in\mathbb{R}^{K} :
+p_j>0,\quad
+\sum_{j=1}^{K}p_j=1
+\right\}
 $$
 
 denotes the relative interior of the probability simplex for $K$ categories.
