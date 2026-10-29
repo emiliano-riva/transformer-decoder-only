@@ -4056,11 +4056,11 @@ The loss depends on $\beta_j$ through the logits. Since $\beta_j$ is a **vector*
 
 The multivariate chain rule gives:
 
-$$
+```math
 \nabla_{\beta_j}\mathcal L_i=\sum_{k=1}^{K}
 \frac{\partial\mathcal L_i}{\partial z_{ik}}
 \nabla_{\beta_j}z_{ik}
-$$
+```
 
 In the linear model considered here, each logit $z_{ik}$ depends only on the coefficient vector $\beta_k$.
 
