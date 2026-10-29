@@ -3053,8 +3053,7 @@ We have added the constant $3$ to every logit.
 Applying the softmax:
 
 $$
-\mathrm{softmax}(\mathbf z')
-=
+\mathrm{softmax}(\mathbf z')=
 \left(
 \frac{e^5}{e^5+e^4+e^3},
 \frac{e^4}{e^5+e^4+e^3},
@@ -3065,8 +3064,7 @@ $$
 Factoring out $e^3$ from the numerator and denominator of each component:
 
 $$
-\mathrm{softmax}(\mathbf z')
-=
+\mathrm{softmax}(\mathbf z')=
 \left(
 \frac{e^2}{e^2+e^1+1},
 \frac{e^1}{e^2+e^1+1},
