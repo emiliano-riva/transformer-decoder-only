@@ -280,4 +280,4 @@ A probability distribution is the model's prediction, not a guarantee of correct
 - [2] [PyTorch: cross-entropy loss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 - [Previous chapter: feed-forward network](https://github.com/emiliano-riva/transformer-decoder-only/blob/main/docs/modules/07-feed-forward-network.md).
 - [Implementation: `TinyDecoderTransformer` and training loop](https://github.com/emiliano-riva/transformer-decoder-only/blob/main/src/tiny_transformer.py).
-- [Statistical foundations: from logits to softmax](https://github.com/emiliano-riva/transformer-decoder-only/blob/main/docs/deep-dives/from-logits-to-softmax.md). The current introductory draft connects categorical models, log-odds, and cross-entropy; the full GLM tutorial remains to be integrated.
+- [Statistical foundations: from logits to softmax](https://github.com/emiliano-riva/transformer-decoder-only/blob/main/docs/deep-dives/from-logits-to-softmax.md).
