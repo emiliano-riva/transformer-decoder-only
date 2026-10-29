@@ -2038,10 +2038,10 @@ Therefore:
 $$
 \boxed{\nabla A(\boldsymbol\theta)=
 \begin{pmatrix}
-\p_1\\
-\p_2\\
+p_1\\
+p_2\\
 \vdots\\
-\p_{K-1}
+p_{K-1}
 \end{pmatrix}}
 $$
 
