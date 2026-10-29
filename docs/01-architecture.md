@@ -34,14 +34,14 @@ flowchart TD
   ADD2 --> Y[Updated representations]
 ```
 
-Let $X\in\mathbb R^{B\times T\times d_{\mathrm{model}}}$. A decoder block implements
+Let $X\in\mathrm R^{B\times T\times d_{\mathrm{model}}}$. A decoder block implements
 
 $$
-U=X+\operatorname{Attention}(\operatorname{LN}_1(X)),
+U=X+\mathrm{Attention}(\mathrm{LN}_1(X)),
 $$
 
 $$
-Y=U+\operatorname{FFN}(\operatorname{LN}_2(U)).
+Y=U+\mathrm{FFN}(\mathrm{LN}_2(U)).
 $$
 
 Both sublayers preserve the last tensor dimension. Each block owns its own attention projections, normalization parameters, and feed-forward weights.
