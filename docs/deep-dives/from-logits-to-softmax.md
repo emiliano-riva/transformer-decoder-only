@@ -691,3 +691,1902 @@ $$
 $$
 
 Setting $\eta=\theta$ gives the logit link and, by inversion, the logistic or sigmoid function. This provides the foundation for the subsequent generalization to the multinomial distribution and softmax.
+
+# 3. From the Bernoulli Distribution to Logistic Regression
+
+In the previous chapter, we showed how representing a distribution as a member of the exponential family allows us to identify its natural parameter, derive its expected value and variance through the cumulant function, and define a particular link function known as the *canonical link*.
+
+We now apply these results to the **Bernoulli distribution**, which is used to model binary random variables.
+
+We will show how the natural parameter of the Bernoulli distribution leads to the *logit* function and how choosing the canonical link gives rise to the logistic regression model, whose inverse link function is the *sigmoid*.
+
+## 3.1 The Bernoulli Distribution
+
+Consider a random variable $Y$ that can take only two values:
+
+$$
+Y\in\{0,1\}
+$$
+
+The Bernoulli distribution is particularly well suited to modeling phenomena with two possible outcomes, conventionally called *success* and *failure*.
+
+We write:
+
+$$
+Y\sim\mathrm{Bernoulli}(p)
+$$
+
+where $p$ denotes the probability of success:
+
+$$
+P(Y=1)=p
+$$
+
+$$
+P(Y=0)=1-p
+$$
+
+The Bernoulli probability mass function can be written compactly as:
+
+$$
+\boxed{
+P(Y=y)=p^y(1-p)^{1-y}
+}
+$$
+
+where $y\in\{0,1\}$.
+
+We can verify this expression by considering the two possible values separately.
+
+If $y=1$:
+
+$$
+P(Y=1)=p^1(1-p)^0=p
+$$
+
+If $y=0$:
+
+$$
+P(Y=0)=p^0(1-p)^1=1-p
+$$
+
+The distribution is therefore completely determined by the parameter $p$. In general, $0\leq p\leq1$; for the logarithmic derivations that follow, we assume $0<p<1$. The boundary cases $p=0$ and $p=1$ are degenerate distributions and can be obtained as limits of the canonical parameterization.
+
+In regression, however, we want this probability to depend on the characteristics of an observation.
+
+For observation $i$, we write:
+
+$$
+Y_i\mid x_i\sim\mathrm{Bernoulli}(p_i)
+$$
+
+where:
+
+$$
+p_i=P(Y_i=1\mid x_i)
+$$
+
+Our goal is to build a model that describes the relationship between the covariates $x_i$ and the probability $p_i$.
+
+## 3.2 Representing the Bernoulli Distribution in the Exponential Family
+
+To identify the canonical link, we first need to express the Bernoulli probability mass function in exponential-family form.
+
+We start with:
+
+$$
+P(Y=y)=p^y(1-p)^{1-y}
+$$
+
+Taking the natural logarithm of both sides:
+
+$$
+\ln P(Y=y)=y\ln p+(1-y)\ln(1-p)
+$$
+
+Expanding:
+
+$$
+\ln P(Y=y)=y\ln p+\ln(1-p)-y\ln(1-p)
+$$
+
+Collecting the terms that depend on $y$:
+
+$$
+\ln P(Y=y)=y[\ln p-\ln(1-p)]+\ln(1-p)
+$$
+
+Using the properties of logarithms:
+
+$$
+\ln P(Y=y)=y\ln\left(\frac{p}{1-p}\right)+\ln(1-p)
+$$
+
+Returning to exponential form:
+
+$$
+\boxed{
+P(Y=y)=
+\exp\left[
+y\ln\left(\frac{p}{1-p}\right)+\ln(1-p)
+\right]
+}
+$$
+
+We compare this expression with the general form of the exponential family:
+
+$$
+f(y;\theta,\phi)=
+\exp\left[
+\frac{y\theta-b(\theta)}{a(\phi)}
++c(y,\phi)
+\right]
+$$
+
+The term multiplying $y$ allows us to identify the **natural parameter**:
+
+$$
+\boxed{
+\theta=\ln\left(\frac{p}{1-p}\right)
+}
+$$
+
+For $0<p<1$, the natural parameter is finite and can take any real value. As $p$ approaches $0$ or $1$, $\theta$ approaches $-\infty$ or $+\infty$, respectively.
+
+We have therefore found a transformation that maps the probability $p$ to a parameter defined over the entire real line.
+
+To complete the exponential-family representation, we need to determine the cumulant function $b(\theta)$.
+
+## 3.3 Deriving the Cumulant Function
+
+We begin with the relationship obtained above:
+
+$$
+\theta=\ln\left(\frac{p}{1-p}\right)
+$$
+
+Exponentiating both sides:
+
+$$
+e^\theta=\frac{p}{1-p}
+$$
+
+Multiplying both sides by $1-p$:
+
+$$
+e^\theta(1-p)=p
+$$
+
+Expanding:
+
+$$
+e^\theta-e^\theta p=p
+$$
+
+Factoring out $p$:
+
+$$
+e^\theta=p(1+e^\theta)
+$$
+
+We obtain:
+
+$$
+\boxed{
+p=\frac{e^\theta}{1+e^\theta}
+}
+$$
+
+We can therefore also express the complementary probability in terms of $\theta$:
+
+$$
+1-p=1-\frac{e^\theta}{1+e^\theta}
+$$
+
+Hence:
+
+$$
+1-p=\frac{1}{1+e^\theta}
+$$
+
+Taking the natural logarithm:
+
+$$
+\ln(1-p)=-\ln(1+e^\theta)
+$$
+
+Let us return to the probability mass function derived in the previous section:
+
+$$
+P(Y=y)=
+\exp\left[
+y\ln\left(\frac{p}{1-p}\right)+\ln(1-p)
+\right]
+$$
+
+Substituting the expressions in terms of $\theta$, we obtain:
+
+$$
+\boxed{
+P(Y=y)=
+\exp\left[
+y\theta-\ln(1+e^\theta)
+\right]
+}
+$$
+
+Comparing this with the canonical form:
+
+$$
+f(y;\theta)=\exp[y\theta-b(\theta)]
+$$
+
+we can identify:
+
+$$
+\boxed{
+b(\theta)=\ln(1+e^\theta)
+}
+$$
+
+Under the parameterization considered here, the Bernoulli distribution also satisfies:
+
+$$
+a(\phi)=1
+$$
+
+$$
+c(y,\phi)=0
+$$
+
+The Bernoulli distribution has no free dispersion parameter, because its variance is completely determined by the probability $p$.
+
+We have thus identified the two fundamental elements:
+
+$$
+\boxed{
+\begin{aligned}
+\theta&=\ln\left(\frac{p}{1-p}\right)\\[6pt]
+b(\theta)&=\ln(1+e^\theta)
+\end{aligned}
+}
+$$
+
+## 3.4 Verifying the Expected Value and Variance
+
+In the previous chapter, we demonstrated that, for a distribution in the exponential family under the usual regularity conditions:
+
+$$
+\mathbb{E}[Y]=b'(\theta)
+$$
+
+$$
+\mathrm{Var}(Y)=a(\phi)b''(\theta)
+$$
+
+Let us verify that these relationships reproduce the moments of the Bernoulli distribution.
+
+### Expected Value
+
+The cumulant function is:
+
+$$
+b(\theta)=\ln(1+e^\theta)
+$$
+
+Differentiating with respect to $\theta$:
+
+$$
+b'(\theta)=\frac{e^\theta}{1+e^\theta}
+$$
+
+But from the previous section we know that:
+
+$$
+p=\frac{e^\theta}{1+e^\theta}
+$$
+
+Therefore:
+
+$$
+\boxed{
+\mathbb{E}[Y]=b'(\theta)=p
+}
+$$
+
+### Variance
+
+Differentiating a second time:
+
+$$
+b''(\theta)=
+\frac{\partial}{\partial\theta}
+\left(
+\frac{e^\theta}{1+e^\theta}
+\right)
+$$
+
+Applying the quotient rule:
+
+$$
+b''(\theta)=
+\frac{
+e^\theta(1+e^\theta)-e^{2\theta}
+}{
+(1+e^\theta)^2
+}
+$$
+
+Simplifying:
+
+$$
+b''(\theta)=
+\frac{e^\theta}{(1+e^\theta)^2}
+$$
+
+Since:
+
+$$
+p=\frac{e^\theta}{1+e^\theta}
+$$
+
+and:
+
+$$
+1-p=\frac{1}{1+e^\theta}
+$$
+
+we obtain:
+
+$$
+b''(\theta)=p(1-p)
+$$
+
+Since $a(\phi)=1$:
+
+$$
+\boxed{
+\mathrm{Var}(Y)=p(1-p)
+}
+$$
+
+Representing the Bernoulli distribution in the exponential family therefore allows us to recover both its expected value and its variance correctly.
+
+These properties also have an important consequence: the variance of the Bernoulli distribution depends on the probability of success and reaches its maximum at $p=0.5$. Indeed:
+
+$$
+p(1-p)=\frac14-\left(p-\frac12\right)^2\leq\frac14
+$$
+
+The maximum variance is therefore $1/4$.
+
+## 3.5 The Canonical Link: The Logit Function
+
+We can now apply the theory of generalized linear models (GLMs) directly.
+
+For the Bernoulli distribution, we have shown that:
+
+$$
+\mu=\mathbb{E}[Y]=p
+$$
+
+and:
+
+$$
+\theta=\ln\left(\frac{p}{1-p}\right)
+$$
+
+Recall that the canonical link is obtained by setting the natural parameter equal to the linear predictor:
+
+$$
+\boxed{
+\eta=\theta
+}
+$$
+
+Substituting $\mu=p$, we obtain:
+
+$$
+\boxed{
+g(\mu)=\ln\left(\frac{\mu}{1-\mu}\right)
+}
+$$
+
+This function is called the **logit**:
+
+$$
+\boxed{
+\mathrm{logit}(p)=
+\ln\left(\frac{p}{1-p}\right)
+}
+$$
+
+The logit function maps the open interval of probabilities onto the real line:
+
+$$
+g:(0,1)\longrightarrow\mathbb R
+$$
+
+This connection is fundamental because the linear predictor of a GLM can take any real value, whereas a probability must lie in the interval $[0,1]$.
+
+The logit function therefore lets us model an unconstrained quantity on the real scale while retaining a correspondence with a valid probability. For every finite value of the predictor $\eta$, the logistic function returns a probability strictly between $0$ and $1$; the boundary values are reached only in the limit.
+
+### The Logistic Function, or Sigmoid
+
+Consider a model with a single explanatory variable:
+
+$$
+\eta=\beta_0+\beta_1x
+$$
+
+Choosing the canonical link gives:
+
+$$
+\ln\left(\frac{p}{1-p}\right)=\beta_0+\beta_1x
+$$
+
+We have already shown that:
+
+$$
+p=\frac{e^\theta}{1+e^\theta}
+$$
+
+Since $\theta=\eta$, substituting the linear predictor gives:
+
+$$
+p=\frac{e^{\beta_0+\beta_1x}}
+{1+e^{\beta_0+\beta_1x}}
+$$
+
+Dividing the numerator and denominator by $e^{\beta_0+\beta_1x}$:
+
+$$
+\boxed{
+p=\frac{1}{1+e^{-(\beta_0+\beta_1x)}}
+}
+$$
+
+This is the **logistic function**, often called the *logistic sigmoid* (the term *sigmoid* can also refer to other S-shaped functions):
+
+$$
+\boxed{
+\sigma(\eta)=\frac{1}{1+e^{-\eta}}
+}
+$$
+
+The logistic function is therefore the inverse of the logit:
+
+$$
+\boxed{
+\sigma=\mathrm{logit}^{-1}
+}
+$$
+
+The sigmoid is a strictly increasing function whose values lie between $0$ and $1$, excluding the endpoints.
+
+In particular:
+
+$$
+\lim_{\eta\to-\infty}\sigma(\eta)=0
+$$
+
+$$
+\sigma(0)=0.5
+$$
+
+$$
+\lim_{\eta\to+\infty}\sigma(\eta)=1
+$$
+
+We can thus express the conditional probability of the binary response as:
+
+$$
+\boxed{
+P(Y_i=1\mid x_i)=
+\sigma(x_i^\top\beta)
+}
+$$
+
+This is the **binary logistic regression** model.
+
+In the vector notation $x_i^\top\beta$, the intercept $\beta_0$ is included by assuming that the first component of the covariate vector equals $1$. For example, with one explanatory variable, $x_i=(1,x_i)^\top$ and $\beta=(\beta_0,\beta_1)^\top$; to avoid ambiguity between the vector and the scalar, we can write more precisely $\mathbf{x}_i=(1,x_i)^\top$ and $\mathbf{x}_i^\top\beta=\beta_0+\beta_1x_i$.
+
+The key distinction is that the model is linear on the log-odds scale, but not on the probability scale.
+
+## 3.6 Statistical Interpretation of the Coefficients
+
+One of the main advantages of logistic regression is that its coefficients can be interpreted through a measure of association between the explanatory variables and the response.
+
+To understand this property, we first need to introduce the concept of *odds*.
+
+### Odds
+
+Given a probability of success $p$, we define the odds as:
+
+$$
+\boxed{
+\mathrm{odds}(p)=\frac{p}{1-p}
+}
+$$
+
+The odds are the ratio of the probability that an event occurs to the probability that it does not occur.
+
+For example, if:
+
+$$
+p=0.8
+$$
+
+then:
+
+$$
+\mathrm{odds}(p)=\frac{0.8}{0.2}=4
+$$
+
+This means that the event is four times as likely to occur as not to occur.
+
+The logit function is simply the natural logarithm of the odds:
+
+$$
+\mathrm{logit}(p)=
+\ln(\mathrm{odds}(p))
+$$
+
+### Interpreting the Coefficient $\beta_1$
+
+Consider again the model:
+
+$$
+\mathrm{logit}(p(x))=\beta_0+\beta_1x
+$$
+
+Consider an initial value $x$ and a one-unit increase to $x+1$.
+
+At the initial value:
+
+$$
+\mathrm{logit}(p(x))=\beta_0+\beta_1x
+$$
+
+At the increased value:
+
+$$
+\mathrm{logit}(p(x+1))
+=\beta_0+\beta_1(x+1)
+$$
+
+Expanding:
+
+$$
+\mathrm{logit}(p(x+1))
+=\beta_0+\beta_1x+\beta_1
+$$
+
+Subtracting the two expressions:
+
+$$
+\mathrm{logit}(p(x+1))
+-
+\mathrm{logit}(p(x))
+=\beta_1
+$$
+
+Substituting the definition of the logit:
+
+$$
+\ln\left(
+\frac{p(x+1)}{1-p(x+1)}
+\right)
+-
+\ln\left(
+\frac{p(x)}{1-p(x)}
+\right)
+=\beta_1
+$$
+
+Using the properties of logarithms:
+
+$$
+\ln\left[
+\frac{
+\mathrm{odds}(p(x+1))
+}{
+\mathrm{odds}(p(x))
+}
+\right]
+=\beta_1
+$$
+
+Exponentiating:
+
+$$
+\boxed{
+\frac{
+\mathrm{odds}(p(x+1))
+}{
+\mathrm{odds}(p(x))
+}
+=e^{\beta_1}
+}
+$$
+
+The resulting ratio is called the **odds ratio (OR)**.
+
+Thus, $e^{\beta_1}$ represents the multiplicative change in the odds associated with a one-unit increase in the explanatory variable $x$.
+
+We can distinguish three cases:
+
+| Coefficient | Odds ratio | Interpretation |
+|---|---|---|
+| $\beta_1>0$ | $e^{\beta_1}>1$ | The odds increase |
+| $\beta_1=0$ | $e^{\beta_1}=1$ | The odds remain unchanged |
+| $\beta_1<0$ | $e^{\beta_1}<1$ | The odds decrease |
+
+The interpretation is therefore multiplicative on the odds scale and additive on the log-odds scale.
+
+### Interpreting the Intercept
+
+In the model:
+
+$$
+\mathrm{logit}(p(x))=\beta_0+\beta_1x
+$$
+
+setting $x=0$:
+
+$$
+\mathrm{logit}(p(0))=\beta_0
+$$
+
+Consequently:
+
+$$
+\boxed{
+p(0)=\frac{1}{1+e^{-\beta_0}}
+}
+$$
+
+The intercept determines the predicted probability when the explanatory variable equals zero.
+
+This interpretation is particularly useful when $x=0$ represents a meaningful condition in the phenomenon being studied.
+
+### Extension to Multiple Covariates
+
+For a model with multiple explanatory variables:
+
+$$
+\mathrm{logit}(p(x))=
+\beta_0+\beta_1x_1+\cdots+\beta_kx_k
+$$
+
+the interpretation generalizes directly.
+
+The coefficient $\beta_j$ represents the change in log-odds associated with a one-unit increase in $x_j$, holding the other covariates constant.
+
+Exponentiating the coefficient:
+
+$$
+\boxed{
+OR_j=e^{\beta_j}
+}
+$$
+
+gives the corresponding odds ratio conditional on the other explanatory variables.
+
+This property allows us to quantify the direction and strength of the modeled association between each covariate and the response variable. In the additive log-odds model considered here, with no interaction terms, $OR_j$ is constant across values of the other covariates. When interactions are present, however, the effect of $x_j$ may depend on the other variables.
+
+This is nevertheless a statistical association: a causal interpretation requires additional assumptions about the data-generating process.
+
+## 3.7 Numerical Example: Odds Ratios and Probabilities
+
+Consider a logistic regression model with one explanatory variable:
+
+$$
+\mathrm{logit}(p(x))=\beta_0+\beta_1x
+$$
+
+Suppose the coefficients take the following values:
+
+$$
+\beta_0=\ln\left(\frac14\right)
+$$
+
+$$
+\beta_1=\ln 2
+$$
+
+The corresponding odds ratio is:
+
+$$
+OR=e^{\beta_1}=2
+$$
+
+This means that a one-unit increase in $x$ doubles the odds of the event.
+
+Let us see what happens to the probabilities.
+
+### Initial Probability
+
+For $x=0$:
+
+$$
+\mathrm{logit}(p(0))=\beta_0
+$$
+
+Applying the logistic function:
+
+$$
+p(0)=\frac{1}{1+e^{-\beta_0}}
+$$
+
+Since:
+
+$$
+e^{\beta_0}=\frac14
+$$
+
+we obtain:
+
+$$
+p(0)=\frac{1/4}{1+1/4}=0.2
+$$
+
+The initial odds are:
+
+$$
+\mathrm{odds}(p(0))=
+\frac{0.2}{0.8}=0.25
+$$
+
+### Probability After a One-Unit Increase
+
+For $x=1$:
+
+$$
+\mathrm{logit}(p(1))=\beta_0+\beta_1
+$$
+
+The odds become:
+
+$$
+\mathrm{odds}(p(1))
+=e^{\beta_0+\beta_1}
+$$
+
+Using the properties of the exponential function:
+
+$$
+\mathrm{odds}(p(1))
+=e^{\beta_0}e^{\beta_1}
+$$
+
+Therefore:
+
+$$
+\mathrm{odds}(p(1))=
+0.25\cdot2=0.5
+$$
+
+To recover the probability, we use:
+
+$$
+p=\frac{\mathrm{odds}(p)}
+{1+\mathrm{odds}(p)}
+$$
+
+We obtain:
+
+$$
+p(1)=\frac{0.5}{1+0.5}
+=\frac13\approx0.333
+$$
+
+Let us summarize the results:
+
+| Variable $x$ | Probability $p(x)$ | Odds |
+|---|---|---|
+| $0$ | $0.200$ | $0.25$ |
+| $1$ | $0.333$ | $0.50$ |
+
+A one-unit increase in $x$ therefore doubles the odds, while the probability rises from $20\%$ to approximately $33.3\%$, an increase of about $13.3$ percentage points.
+
+**An odds ratio of $2$ does not mean that the probability doubles.**
+
+This is because the relationship between probabilities and odds is nonlinear.
+
+In general, for a one-unit increase in $x$, we can write:
+
+$$
+\boxed{
+p(x+1)=
+\frac{
+e^{\beta_1}p(x)
+}{
+1-p(x)+e^{\beta_1}p(x)
+}
+}
+$$
+
+The change in probability therefore depends on both the odds ratio and the initial probability.
+
+This distinguishes logistic regression from ordinary linear regression: while $\beta_1$ represents a constant change on the log-odds scale, it does not imply a constant change in probability.
+
+## 3.8 Remarks on Logistic Regression
+
+We have derived binary logistic regression directly from the Bernoulli distribution.
+
+The derivation can be summarized by the following relationships.
+
+**Response distribution:**
+
+$$
+Y_i\mid x_i\sim\mathrm{Bernoulli}(p_i)
+$$
+
+**Natural parameter:**
+
+$$
+\theta_i=\ln\left(\frac{p_i}{1-p_i}\right)
+$$
+
+**Canonical link:**
+
+$$
+\mathrm{logit}(p_i)=\eta_i=x_i^\top\beta
+$$
+
+**Inverse link function:**
+
+$$
+\boxed{
+p_i=\sigma(x_i^\top\beta)
+=\frac{1}{1+e^{-x_i^\top\beta}}
+}
+$$
+
+We have therefore shown that the logistic function is not introduced arbitrarily; it arises from choosing the canonical link for the Bernoulli distribution.
+
+This choice is mathematically convenient and makes it possible to interpret the coefficients using odds ratios.
+
+However, it is not the only link function that can be used for a Bernoulli response. As discussed in the previous chapter, other links, such as the probit link, allow us to specify different relationships between probabilities and predictors.
+
+The result of greatest interest here is that **the Bernoulli distribution has a single natural parameter, which can be interpreted as the logarithm of the ratio between two complementary probabilities**.
+
+In the next chapter, we will generalize this construction to a response variable with $K$ mutually exclusive categories.
+
+In that case, instead of a single natural parameter, we will obtain a vector of $K-1$ log probability ratios. This generalization will be the key step toward deriving the softmax function.
+
+# 4. Generalization to the Multinomial Distribution
+
+In the previous chapter, we showed how the Bernoulli distribution can be represented as a member of the exponential family, deriving its natural parameter:
+
+$$
+\theta=\ln\left(\frac{p}{1-p}\right)
+$$
+
+Choosing the canonical link by imposing $\eta=\theta$ leads to the logit function and, through its inverse, to the logistic or sigmoid function.
+
+This construction is particularly well suited to binary classification problems, in which the response variable can take only two values.
+
+We now want to generalize this procedure to a response variable that can belong to one of $K$ mutually exclusive categories.
+
+To do so, we will start from the **categorical distribution**, which is equivalent to a multinomial distribution with a single trial, and show that it too belongs to the exponential family.
+
+We will also see how the probability normalization constraint leads to a representation with $K-1$ natural parameters and a multivariate cumulant function.
+
+## 4.1 From the Bernoulli to the Categorical Distribution
+
+Consider a random variable $Y$ that can take one of $K$ distinct values, with $K\geq 2$:
+
+$$
+Y\in\{1,2,\ldots,K\}
+$$
+
+Define the probability associated with a generic category $j$:
+
+$$
+p_j=P(Y=j)
+$$
+
+where:
+
+$$
+j=1,\ldots,K
+$$
+
+The probabilities must satisfy two conditions:
+
+$$
+p_j\geq0
+$$
+
+and:
+
+$$
+\boxed{
+\sum_{j=1}^{K}p_j=1
+}
+$$
+
+The second condition follows from the fact that the categories are mutually exclusive and exhaustive: each observation belongs to exactly one category.
+
+In the special case $K=2$, the categorical distribution is equivalent to a Bernoulli distribution, apart from the encoding of the categories.
+
+### One-Hot Representation
+
+To represent category membership mathematically, we introduce a vector of indicator variables:
+
+$$
+\mathbf Y=(Y_1,Y_2,\ldots,Y_K)
+$$
+
+where:
+
+$$
+Y_j=
+\begin{cases}
+1 & \text{if }Y=j\\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+This representation is called **one-hot encoding**.
+
+For example, with three categories, the possible outcomes are:
+
+| Observed category | $Y_1$ | $Y_2$ | $Y_3$ |
+|---|---:|---:|---:|
+| Class 1 | 1 | 0 | 0 |
+| Class 2 | 0 | 1 | 0 |
+| Class 3 | 0 | 0 | 1 |
+
+In each case, exactly one component equals $1$, while all the others equal zero.
+
+Consequently:
+
+$$
+\boxed{
+\sum_{j=1}^{K}Y_j=1
+}
+$$
+
+The distribution of the vector $\mathbf Y$ can be written as:
+
+$$
+\mathbf Y\sim\mathrm{Multinomial}(1,\mathbf p)
+$$
+
+where:
+
+$$
+\mathbf p=(p_1,p_2,\ldots,p_K)
+$$
+
+The first argument of the multinomial distribution specifies the number of trials, which in this case is one.
+
+Therefore, the categorical distribution is the special case of the multinomial distribution with a single trial.
+
+### Probability Mass Function
+
+Using the one-hot representation, the probability mass function can be written as:
+
+$$
+\boxed{
+P(\mathbf Y=\mathbf y)=
+\prod_{j=1}^{K}p_j^{y_j}
+}
+$$
+
+Let us verify this expression.
+
+Suppose we have three categories and observe the second one:
+
+$$
+\mathbf y=(0,1,0)
+$$
+
+Then:
+
+$$
+P(\mathbf Y=(0,1,0))
+=p_1^0p_2^1p_3^0
+$$
+
+and therefore:
+
+$$
+P(\mathbf Y=(0,1,0))=p_2
+$$
+
+The representation correctly returns the probability of the observed category.
+
+For $n$ independent trials with the same category probabilities, the overall category counts instead follow the general multinomial distribution, whose probability mass function also includes the multinomial coefficient.
+
+We will initially consider a single observation and then extend the model to a sample.
+
+## 4.2 The Normalization Constraint and the $K-1$ Degrees of Freedom
+
+Before deriving the exponential-family representation, we must examine an important consequence of the constraint:
+
+$$
+\sum_{j=1}^{K}Y_j=1
+$$
+
+From this relationship, we can isolate the last component:
+
+$$
+\boxed{
+Y_K=1-\sum_{j=1}^{K-1}Y_j
+}
+$$
+
+This means that, once the first $K-1$ components of the vector are known, the last one is uniquely determined.
+
+For example, when $K=3$:
+
+$$
+Y_3=1-Y_1-Y_2
+$$
+
+The possible configurations are:
+
+| $Y_1$ | $Y_2$ | $Y_3=1-Y_1-Y_2$ |
+|---:|---:|---:|
+| 1 | 0 | 0 |
+| 0 | 1 | 0 |
+| 0 | 0 | 1 |
+
+Thus, $Y_1+Y_2$ equals $1$ if either of the first two categories is observed, and $0$ if the third category is observed.
+
+### Free Coordinates and Statistical Independence
+
+The constraint implies that only $K-1$ coordinates are needed to represent the indicator vector.
+
+However, this does not mean that the first $K-1$ variables are statistically independent. For $K\geq 3$, there are at least two indicators among these components, and they are dependent when both corresponding categories have positive probabilities.
+
+Indeed, if one indicator equals $1$, all the others must necessarily equal $0$.
+
+For two distinct categories $j$ and $h$, with $j\neq h$:
+
+$$
+P(Y_j=1,Y_h=1)=0
+$$
+
+whereas, if both categories have positive probabilities:
+
+$$
+P(Y_j=1)P(Y_h=1)=p_jp_h>0
+$$
+
+Therefore, the indicators are statistically dependent.
+
+The important distinction is that **the indicator vector is subject to a linear constraint and has only $K-1$ nonredundant coordinates**.
+
+The same principle applies to the probability vector:
+
+$$
+\sum_{j=1}^{K}p_j=1
+$$
+
+Hence:
+
+$$
+\boxed{
+p_K=1-\sum_{j=1}^{K-1}p_j
+}
+$$
+
+Knowing the first $K-1$ probabilities determines the last one.
+
+Nevertheless, the first $K-1$ probabilities cannot be chosen arbitrarily: they must be nonnegative, and their sum must not exceed $1$.
+
+This structure introduces $K-1$ degrees of freedom into the parameterization of the distribution.
+
+For the remainder of the derivation, we assume:
+
+$$
+p_j>0,\qquad j=1,\ldots,K
+$$
+
+so that all logarithms of probability ratios are well defined and finite. This assumption restricts our discussion to the **interior of the probability simplex**: cases with zero probabilities correspond to limiting values of the natural parameters, not finite values.
+
+## 4.3 Exponential-Family Representation
+
+Recall the probability mass function of the categorical distribution:
+
+$$
+P(\mathbf Y=\mathbf y)=
+\prod_{j=1}^{K}p_j^{y_j}
+$$
+
+Take the natural logarithm:
+
+$$
+\ln P(\mathbf Y=\mathbf y)
+=
+\ln\left(\prod_{j=1}^{K}p_j^{y_j}\right)
+$$
+
+Using the properties of logarithms:
+
+$$
+\boxed{
+\ln P(\mathbf Y=\mathbf y)
+=
+\sum_{j=1}^{K}y_j\ln p_j
+}
+$$
+
+Our goal is to rewrite this expression in the form of a multiparameter exponential family.
+
+### Introducing a Reference Category
+
+Since only $K-1$ probabilities are free, we can choose one category as the reference and express the other probabilities relative to it.
+
+By convention, we choose category $K$.
+
+From the constraint on the one-hot representation:
+
+$$
+y_K=1-\sum_{j=1}^{K-1}y_j
+$$
+
+Separate the term corresponding to the reference category:
+
+$$
+\ln P(\mathbf Y=\mathbf y)
+=
+\sum_{j=1}^{K-1}y_j\ln p_j
++y_K\ln p_K
+$$
+
+Substitute the expression for $y_K$:
+
+$$
+\begin{aligned}
+\ln P(\mathbf Y=\mathbf y)
+&=
+\sum_{j=1}^{K-1}y_j\ln p_j\\
+&\quad+
+\left(1-\sum_{j=1}^{K-1}y_j\right)\ln p_K
+\end{aligned}
+$$
+
+Expanding:
+
+$$
+\begin{aligned}
+\ln P(\mathbf Y=\mathbf y)
+&=
+\sum_{j=1}^{K-1}y_j\ln p_j
++\ln p_K\\
+&\quad-
+\sum_{j=1}^{K-1}y_j\ln p_K
+\end{aligned}
+$$
+
+Collect the terms involving $y_j$:
+
+$$
+\ln P(\mathbf Y=\mathbf y)
+=
+\sum_{j=1}^{K-1}
+y_j(\ln p_j-\ln p_K)
++\ln p_K
+$$
+
+Applying the logarithm-of-a-ratio identity:
+
+$$
+\boxed{
+\ln P(\mathbf Y=\mathbf y)
+=
+\sum_{j=1}^{K-1}
+y_j\ln\left(\frac{p_j}{p_K}\right)
++\ln p_K
+}
+$$
+
+This expression is analogous to the one obtained for the Bernoulli distribution.
+
+In the binary case, we identified the natural parameter:
+
+$$
+\theta=\ln\left(\frac{p}{1-p}\right)
+$$
+
+In the categorical case, we can instead identify one natural parameter for each of the first $K-1$ categories:
+
+$$
+\boxed{
+\theta_j=
+\ln\left(\frac{p_j}{p_K}\right),
+\qquad j=1,\ldots,K-1
+}
+$$
+
+We thus obtain a vector of natural parameters:
+
+$$
+\boxed{
+\boldsymbol\theta=
+\begin{pmatrix}
+\theta_1\\
+\theta_2\\
+\vdots\\
+\theta_{K-1}
+\end{pmatrix}
+}
+$$
+
+where:
+
+$$
+\boldsymbol\theta\in\mathbb R^{K-1}
+$$
+
+Each parameter $\theta_j$ represents the logarithm of the ratio between the probability of category $j$ and that of the reference category $K$. This is the **minimal reference-category parameterization**: choosing category $K$ is a convention, while the number of free natural coordinates remains $K-1$.
+
+For $K>2$, unlike the Bernoulli distribution, the categorical distribution requires multiple natural parameters. When $K=2$, we recover the single Bernoulli parameter: setting $p_1=p$ and $p_2=1-p$ yields $\theta_1=\ln[p/(1-p)]$.
+
+The next step is to derive the corresponding cumulant function.
+
+## 4.4 Deriving the Multivariate Cumulant Function
+
+Starting from the definition of the natural parameters:
+
+$$
+\theta_j=\ln\left(\frac{p_j}{p_K}\right)
+$$
+
+exponentiate both sides:
+
+$$
+e^{\theta_j}=\frac{p_j}{p_K}
+$$
+
+Multiplying by $p_K$:
+
+$$
+\boxed{
+p_j=p_Ke^{\theta_j}
+}
+$$
+
+This relationship allows us to express the probability of each category relative to that of the reference category.
+
+### Using the Normalization Constraint
+
+We know that:
+
+$$
+\sum_{j=1}^{K}p_j=1
+$$
+
+Separate the probability of category $K$:
+
+$$
+p_K+\sum_{j=1}^{K-1}p_j=1
+$$
+
+Substitute:
+
+$$
+p_j=p_Ke^{\theta_j}
+$$
+
+We obtain:
+
+$$
+p_K+\sum_{j=1}^{K-1}p_Ke^{\theta_j}=1
+$$
+
+Factor out $p_K$:
+
+$$
+p_K\left(
+1+\sum_{j=1}^{K-1}e^{\theta_j}
+\right)=1
+$$
+
+Hence:
+
+$$
+\boxed{
+p_K=
+\frac{1}
+{1+\sum_{j=1}^{K-1}e^{\theta_j}}
+}
+$$
+
+We have now expressed the probability of the reference category as a function of the $K-1$ natural parameters.
+
+### Deriving the Other Probabilities
+
+For the first $K-1$ categories, we previously obtained:
+
+$$
+p_j=p_Ke^{\theta_j}
+$$
+
+Substitute the expression just derived for $p_K$:
+
+$$
+p_j=
+\left(
+\frac{1}
+{1+\sum_{h=1}^{K-1}e^{\theta_h}}
+\right)e^{\theta_j}
+$$
+
+Moving the exponential factor to the numerator:
+
+$$
+\boxed{
+p_j=
+\frac{e^{\theta_j}}
+{1+\sum_{h=1}^{K-1}e^{\theta_h}},
+\qquad j=1,\ldots,K-1
+}
+$$
+
+The index $j$ identifies the category whose probability we want to calculate, while $h$ is the summation index used to include the contributions from all non-reference categories.
+
+The probabilities therefore share the same denominator.
+
+### Identifying the Cumulant Function
+
+Recall the log-probability derived in the previous section:
+
+$$
+\ln P(\mathbf Y=\mathbf y)
+=
+\sum_{j=1}^{K-1}y_j\theta_j+\ln p_K
+$$
+
+Since:
+
+$$
+p_K=
+\frac{1}
+{1+\sum_{j=1}^{K-1}e^{\theta_j}}
+$$
+
+taking the logarithm gives:
+
+$$
+\ln p_K=
+-\ln\left(
+1+\sum_{j=1}^{K-1}e^{\theta_j}
+\right)
+$$
+
+Substituting:
+
+$$
+\begin{aligned}
+\ln P(\mathbf Y=\mathbf y)
+&=
+\sum_{j=1}^{K-1}y_j\theta_j\\
+&\quad-
+\ln\left(
+1+\sum_{j=1}^{K-1}e^{\theta_j}
+\right)
+\end{aligned}
+$$
+
+We identify the **multivariate cumulant function**:
+
+$$
+\boxed{
+A(\boldsymbol\theta)=
+\ln\left(
+1+\sum_{j=1}^{K-1}e^{\theta_j}
+\right)
+}
+$$
+
+The probability mass function can therefore be expressed as:
+
+$$
+\boxed{
+P(\mathbf Y=\mathbf y)=
+\exp\left[
+\sum_{j=1}^{K-1}y_j\theta_j
+-A(\boldsymbol\theta)
+\right]
+}
+$$
+
+Or, using the dot product:
+
+$$
+\boxed{
+P(\mathbf Y=\mathbf y)=
+\exp\left[
+\mathbf y_{1:K-1}^{\top}\boldsymbol\theta
+-A(\boldsymbol\theta)
+\right]
+}
+$$
+
+where $\mathbf y_{1:K-1}$ denotes the vector formed by the first $K-1$ components of the one-hot encoding.
+
+We have thus shown that the categorical distribution belongs to the multiparameter exponential family.
+
+The main difference from the Bernoulli distribution, when $K>2$, concerns the dimensionality of the parameters: rather than a single natural parameter $\theta$, we have a vector $\boldsymbol\theta$ of dimension $K-1$.
+
+Consequently, the cumulant function $b(\theta)$ is generalized to the multivariate function $A(\boldsymbol\theta)$.
+
+## 4.5 Expected Value and Covariance Matrix
+
+In Chapter 2, we showed that, for the exponential family under the parameterization considered:
+
+$$
+\mathbb E[Y]=b'(\theta)
+$$
+
+$$
+\mathrm{Var}(Y)=a(\phi)b''(\theta)
+$$
+
+In the categorical case, the cumulant function depends on a vector of parameters.
+
+Ordinary derivatives are therefore replaced by the **gradient** and the **Hessian matrix**.
+
+For the exponential-family representation just derived, we have:
+
+$$
+\boxed{
+\mathbb E[\mathbf Y_{1:K-1}]
+=
+\nabla A(\boldsymbol\theta)
+}
+$$
+
+and:
+
+$$
+\boxed{
+\mathrm{Cov}(\mathbf Y_{1:K-1})
+=
+\nabla^2 A(\boldsymbol\theta)
+}
+$$
+
+These relationships are the multivariate generalization of the properties already studied for the Bernoulli distribution. In this exponential-family form, the scale factor is one, so the term $a(\phi)$ from the general GLM variance formula does not appear.
+
+### Deriving the Expected Value
+
+We have:
+
+$$
+A(\boldsymbol\theta)=
+\ln\left(
+1+\sum_{h=1}^{K-1}e^{\theta_h}
+\right)
+$$
+
+Calculate the partial derivative with respect to $\theta_j$:
+
+$$
+\frac{\partial A}{\partial\theta_j}
+=
+\frac{\partial}{\partial\theta_j}
+\ln\left(
+1+\sum_{h=1}^{K-1}e^{\theta_h}
+\right)
+$$
+
+Applying the chain rule:
+
+$$
+\frac{\partial A}{\partial\theta_j}
+=
+\frac{
+\frac{\partial}{\partial\theta_j}
+\left(1+\sum_{h=1}^{K-1}e^{\theta_h}\right)
+}{
+1+\sum_{h=1}^{K-1}e^{\theta_h}
+}
+$$
+
+Since only the term with $h=j$ in the sum depends on $\theta_j$:
+
+$$
+\frac{\partial A}{\partial\theta_j}
+=
+\frac{e^{\theta_j}}
+{1+\sum_{h=1}^{K-1}e^{\theta_h}}
+$$
+
+We recognize the probability $p_j$ derived earlier:
+
+$$
+\boxed{
+\frac{\partial A}{\partial\theta_j}=p_j
+}
+$$
+
+Therefore:
+
+$$
+\boxed{
+\nabla A(\boldsymbol\theta)
+=
+\begin{pmatrix}
+p_1\\
+p_2\\
+\vdots\\
+p_{K-1}
+\end{pmatrix}
+}
+$$
+
+This result is consistent with the definition of the indicator variables.
+
+Indeed, for each category:
+
+$$
+\begin{aligned}
+\mathbb E[Y_j]
+&=1\cdot P(Y_j=1)+0\cdot P(Y_j=0)\\
+&=p_j
+\end{aligned}
+$$
+
+Thus, the first derivative of the cumulant function returns the probabilities of the first $K-1$ categories.
+
+The probability of the reference category is determined by the constraint:
+
+$$
+p_K=1-\sum_{j=1}^{K-1}p_j
+$$
+
+### Deriving the Covariance Matrix
+
+Now consider the second derivatives of $A(\boldsymbol\theta)$.
+
+Since:
+
+$$
+\frac{\partial A}{\partial\theta_j}=p_j
+$$
+
+we have:
+
+$$
+\frac{\partial^2 A}
+{\partial\theta_h\partial\theta_j}
+=
+\frac{\partial p_j}{\partial\theta_h}
+$$
+
+Recall that:
+
+$$
+p_j=
+\frac{e^{\theta_j}}
+{1+\sum_{r=1}^{K-1}e^{\theta_r}}
+$$
+
+We distinguish two cases.
+
+**Case 1: $j=h$**
+
+Differentiating with respect to $\theta_j$:
+
+$$
+\frac{\partial p_j}{\partial\theta_j}
+=
+\frac{
+e^{\theta_j}\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)
+-e^{2\theta_j}
+}{
+\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)^2
+}
+$$
+
+Recognizing $p_j$, we obtain:
+
+$$
+\boxed{
+\frac{\partial p_j}{\partial\theta_j}
+=p_j(1-p_j)
+}
+$$
+
+**Case 2: $j\neq h$**
+
+In this case, the numerator $e^{\theta_j}$ does not depend on $\theta_h$.
+
+Applying the quotient rule:
+
+$$
+\frac{\partial p_j}{\partial\theta_h}
+=
+-\frac{
+e^{\theta_j}e^{\theta_h}
+}{
+\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)^2
+}
+$$
+
+Therefore:
+
+$$
+\boxed{
+\frac{\partial p_j}{\partial\theta_h}
+=-p_jp_h
+}
+$$
+
+The two relationships can be expressed using the Kronecker delta:
+
+$$
+\delta_{jh}=
+\begin{cases}
+1 & \text{if }j=h\\
+0 & \text{if }j\neq h
+\end{cases}
+$$
+
+We obtain:
+
+$$
+\boxed{
+\frac{\partial^2 A}
+{\partial\theta_j\partial\theta_h}
+=
+p_j(\delta_{jh}-p_h)
+}
+$$
+
+This expression gives the entries of the covariance matrix of the indicator vector.
+
+For $j=h$:
+
+$$
+\mathrm{Var}(Y_j)=p_j(1-p_j)
+$$
+
+For $j\neq h$:
+
+$$
+\mathrm{Cov}(Y_j,Y_h)=-p_jp_h
+$$
+
+The negative covariances reflect the mutually exclusive nature of the categories: if one category is observed, the others cannot be observed in the same trial.
+
+The matrix can be written in compact form:
+
+$$
+\boxed{
+\mathrm{Cov}(\mathbf Y_{1:K-1})
+=
+\mathrm{diag}(\mathbf p_{1:K-1})
+-
+\mathbf p_{1:K-1}\mathbf p_{1:K-1}^{\top}
+}
+$$
+
+This result highlights how the multivariate cumulant function encodes both the category probabilities and the structure of their dependencies.
+
+**A note on dimensionality.** The matrix just derived is the covariance matrix of the reduced vector $\mathbf Y_{1:K-1}$ and has dimensions $(K-1)\times(K-1)$. If $p_1,\ldots,p_K>0$, it is positive definite. By contrast, the covariance matrix of the full one-hot vector $\mathbf Y$ is $\mathrm{diag}(\mathbf p)-\mathbf p\mathbf p^\top$; it has dimensions $K\times K$ and is singular because $\sum_jY_j=1$ imposes a linear dependence among the components.
+
+## 4.6 Numerical Example with Three Categories
+
+Consider a categorical distribution with:
+
+$$
+K=3
+$$
+
+Choose the third category as the reference and define the natural parameters:
+
+$$
+\theta_1=\ln 2
+$$
+
+$$
+\theta_2=\ln 3
+$$
+
+By definition:
+
+$$
+e^{\theta_1}=\frac{p_1}{p_3}=2
+$$
+
+$$
+e^{\theta_2}=\frac{p_2}{p_3}=3
+$$
+
+We therefore obtain:
+
+$$
+p_1=2p_3
+$$
+
+$$
+p_2=3p_3
+$$
+
+Use the normalization constraint:
+
+$$
+p_1+p_2+p_3=1
+$$
+
+Substituting:
+
+$$
+2p_3+3p_3+p_3=1
+$$
+
+Hence:
+
+$$
+6p_3=1
+$$
+
+and:
+
+$$
+p_3=\frac16
+$$
+
+The other probabilities are:
+
+$$
+p_1=2\cdot\frac16=\frac26
+$$
+
+$$
+p_2=3\cdot\frac16=\frac36
+$$
+
+Thus:
+
+$$
+\boxed{
+\mathbf p=
+\left(
+\frac26,\frac36,\frac16
+\right)
+}
+$$
+
+Verify that:
+
+$$
+\frac26+\frac36+\frac16=1
+$$
+
+The cumulant function is:
+
+$$
+A(\boldsymbol\theta)
+=
+\ln(1+e^{\theta_1}+e^{\theta_2})
+$$
+
+Substituting:
+
+$$
+A(\boldsymbol\theta)=\ln(1+2+3)
+$$
+
+We obtain:
+
+$$
+\boxed{
+A(\boldsymbol\theta)=\ln 6
+}
+$$
+
+If we observe the second category:
+
+$$
+\mathbf y=(0,1,0)
+$$
+
+the exponential-family representation gives:
+
+$$
+P(\mathbf Y=\mathbf y)
+=
+\exp[y_1\theta_1+y_2\theta_2-A(\boldsymbol\theta)]
+$$
+
+Substituting:
+
+$$
+P(\mathbf Y=(0,1,0))
+=
+\exp[0\cdot\ln2+1\cdot\ln3-\ln6]
+$$
+
+Thus:
+
+$$
+P(\mathbf Y=(0,1,0))
+=
+e^{\ln3-\ln6}
+$$
+
+and finally:
+
+$$
+\boxed{
+P(\mathbf Y=(0,1,0))=\frac36=\frac12
+}
+$$
+
+We have verified that the exponential-family representation correctly reproduces the probability of the observed category.
+
+## 4.7 Toward the Multinomial Canonical Link
+
+We can now summarize the results.
+
+The categorical distribution belongs to the multiparameter exponential family and has a vector of $K-1$ natural parameters:
+
+$$
+\boxed{
+\theta_j=\ln\left(\frac{p_j}{p_K}\right),
+\qquad j=1,\ldots,K-1
+}
+$$
+
+The cumulant function is:
+
+$$
+\boxed{
+A(\boldsymbol\theta)=
+\ln\left(
+1+\sum_{j=1}^{K-1}e^{\theta_j}
+\right)
+}
+$$
+
+The category probabilities can be obtained from:
+
+$$
+p_j=
+\frac{e^{\theta_j}}
+{1+\sum_{h=1}^{K-1}e^{\theta_h}}
+$$
+
+for $j=1,\ldots,K-1$, while the reference-category probability is:
+
+$$
+p_K=
+\frac{1}
+{1+\sum_{h=1}^{K-1}e^{\theta_h}}
+$$
+
+We also showed that:
+
+$$
+\mathbb E[\mathbf Y_{1:K-1}]
+=
+\nabla A(\boldsymbol\theta)
+$$
+
+and:
+
+$$
+\mathrm{Cov}(\mathbf Y_{1:K-1})
+=
+\nabla^2A(\boldsymbol\theta)
+$$
+
+**The key result is that the categorical distribution can be represented using $K-1$ log-ratios of probabilities**, rather than a single logit as in the Bernoulli case.
+
+This structure allows us to generalize the concept of the canonical link from the scalar to the vector case.
+
+In the next chapter, we will define a linear predictor for each of the $K-1$ non-reference categories, setting the predictors equal to the natural parameters.
+
+By inverting the multinomial canonical link, we will obtain the softmax function.
+
+We will also examine why the logit of a reference category can be fixed at zero, the role of the softmax function's invariance under additive shifts, and how binary logistic regression emerges as a special case of the multinomial construction.
