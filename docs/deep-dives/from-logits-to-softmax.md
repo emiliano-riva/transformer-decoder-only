@@ -1,6 +1,12 @@
 # From logits to softmax: statistical foundations
 
-> **Status:** introductory English draft. The full, separately developed Italian tutorial on generalized linear models, categorical exponential families, multinomial regression, cross-entropy, and probability calibration still requires a complete editorial translation and integration.
+> **Status:** the full English tutorial is being published chapter by chapter. This page provides a concise overview.
+
+## Full tutorial
+
+1. [Introduction and Generalized Linear Models](from-logits-to-softmax/01-generalized-linear-models.md)
+
+Next planned chapter: the exponential family and the canonical link.
 
 ## 1. Scores and probabilities
 
