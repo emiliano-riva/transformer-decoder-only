@@ -4996,8 +4996,7 @@ The result is an optimized parameter configuration.
 Using this configuration, we can produce logits and probabilities:
 
 $$
-\mathbf p_{\hat\psi}(x)
-=
+\mathbf p_{\hat\psi}(x)=
 \mathrm{softmax}(f_{\hat\psi}(x))
 $$
 
