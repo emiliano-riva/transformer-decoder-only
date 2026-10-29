@@ -946,8 +946,8 @@ We have thus identified the two fundamental elements:
 $$
 \boxed{
 \begin{aligned}
-\theta&=\ln\left(\frac{p}{1-p}\right)\\[6pt]
-b(\theta)&=\ln(1+e^\theta)
+\theta &= \ln\left(\frac{p}{1-p}\right) \\
+b(\theta) &= \ln(1+e^\theta)
 \end{aligned}
 }
 $$
@@ -1265,49 +1265,25 @@ $$
 Subtracting the two expressions:
 
 $$
-\mathrm{logit}(p(x+1))
--
-\mathrm{logit}(p(x))
-=\beta_1
+\mathrm{logit}(p(x+1))-\mathrm{logit}(p(x))=\beta_1
 $$
 
 Substituting the definition of the logit:
 
 $$
-\ln\left(
-\frac{p(x+1)}{1-p(x+1)}
-\right)
--
-\ln\left(
-\frac{p(x)}{1-p(x)}
-\right)
-=\beta_1
+\ln\left(\frac{p(x+1)}{1-p(x+1)}\right)-\ln\left(\frac{p(x)}{1-p(x)}\right)=\beta_1
 $$
 
 Using the properties of logarithms:
 
 $$
-\ln\left[
-\frac{
-\mathrm{odds}(p(x+1))
-}{
-\mathrm{odds}(p(x))
-}
-\right]
-=\beta_1
+\ln\left[\frac{\mathrm{odds}(p(x+1))}{\mathrm{odds}(p(x))}\right]=\beta_1
 $$
 
 Exponentiating:
 
 $$
-\boxed{
-\frac{
-\mathrm{odds}(p(x+1))
-}{
-\mathrm{odds}(p(x))
-}
-=e^{\beta_1}
-}
+\boxed{\frac{\mathrm{odds}(p(x+1))}{\mathrm{odds}(p(x))}=e^{\beta_1}}
 $$
 
 The resulting ratio is called the **odds ratio (OR)**.
@@ -1341,9 +1317,7 @@ $$
 Consequently:
 
 $$
-\boxed{
-p(0)=\frac{1}{1+e^{-\beta_0}}
-}
+\boxed{p(0)=\frac{1}{1+e^{-\beta_0}}}
 $$
 
 The intercept determines the predicted probability when the explanatory variable equals zero.
@@ -1355,8 +1329,7 @@ This interpretation is particularly useful when $x=0$ represents a meaningful co
 For a model with multiple explanatory variables:
 
 $$
-\mathrm{logit}(p(x))=
-\beta_0+\beta_1x_1+\cdots+\beta_kx_k
+\mathrm{logit}(p(x))=\beta_0+\beta_1x_1+\cdots+\beta_kx_k
 $$
 
 the interpretation generalizes directly.
@@ -1366,9 +1339,7 @@ The coefficient $\beta_j$ represents the change in log-odds associated with a on
 Exponentiating the coefficient:
 
 $$
-\boxed{
-OR_j=e^{\beta_j}
-}
+\boxed{OR_j=e^{\beta_j}}
 $$
 
 gives the corresponding odds ratio conditional on the other explanatory variables.
@@ -1434,8 +1405,7 @@ $$
 The initial odds are:
 
 $$
-\mathrm{odds}(p(0))=
-\frac{0.2}{0.8}=0.25
+\mathrm{odds}(p(0))=\frac{0.2}{0.8}=0.25
 $$
 
 ### Probability After a One-Unit Increase
@@ -1470,15 +1440,13 @@ $$
 To recover the probability, we use:
 
 $$
-p=\frac{\mathrm{odds}(p)}
-{1+\mathrm{odds}(p)}
+p=\frac{\mathrm{odds}(p)}{1+\mathrm{odds}(p)}
 $$
 
 We obtain:
 
 $$
-p(1)=\frac{0.5}{1+0.5}
-=\frac13\approx0.333
+p(1)=\frac{0.5}{1+0.5}=\frac13\approx0.333
 $$
 
 Let us summarize the results:
@@ -1497,14 +1465,7 @@ This is because the relationship between probabilities and odds is nonlinear.
 In general, for a one-unit increase in $x$, we can write:
 
 $$
-\boxed{
-p(x+1)=
-\frac{
-e^{\beta_1}p(x)
-}{
-1-p(x)+e^{\beta_1}p(x)
-}
-}
+\boxed{p(x+1)=\frac{e^{\beta_1}p(x)}{1-p(x)+e^{\beta_1}p(x)}}
 $$
 
 The change in probability therefore depends on both the odds ratio and the initial probability.
@@ -1538,10 +1499,7 @@ $$
 **Inverse link function:**
 
 $$
-\boxed{
-p_i=\sigma(x_i^\top\beta)
-=\frac{1}{1+e^{-x_i^\top\beta}}
-}
+\boxed{p_i=\sigma(x_i^\top\beta)=\frac{1}{1+e^{-x_i^\top\beta}}}
 $$
 
 We have therefore shown that the logistic function is not introduced arbitrarily; it arises from choosing the canonical link for the Bernoulli distribution.
@@ -1623,11 +1581,7 @@ $$
 where:
 
 $$
-Y_j=
-\begin{cases}
-1 & \text{if }Y=j\\
-0 & \text{otherwise}
-\end{cases}
+Y_j=\begin{cases}1 & \text{if }Y=j\\0 & \text{otherwise}\end{cases}
 $$
 
 This representation is called **one-hot encoding**.
@@ -1645,9 +1599,7 @@ In each case, exactly one component equals $1$, while all the others equal zero.
 Consequently:
 
 $$
-\boxed{
-\sum_{j=1}^{K}Y_j=1
-}
+\boxed{\sum_{j=1}^{K}Y_j=1}
 $$
 
 The distribution of the vector $\mathbf Y$ can be written as:
@@ -1671,10 +1623,7 @@ Therefore, the categorical distribution is the special case of the multinomial d
 Using the one-hot representation, the probability mass function can be written as:
 
 $$
-\boxed{
-P(\mathbf Y=\mathbf y)=
-\prod_{j=1}^{K}p_j^{y_j}
-}
+\boxed{P(\mathbf Y=\mathbf y)=\prod_{j=1}^{K}p_j^{y_j}}
 $$
 
 Let us verify this expression.
@@ -1688,8 +1637,7 @@ $$
 Then:
 
 $$
-P(\mathbf Y=(0,1,0))
-=p_1^0p_2^1p_3^0
+P(\mathbf Y=(0,1,0))=p_1^0p_2^1p_3^0
 $$
 
 and therefore:
@@ -1771,9 +1719,7 @@ $$
 Hence:
 
 $$
-\boxed{
-p_K=1-\sum_{j=1}^{K-1}p_j
-}
+\boxed{p_K=1-\sum_{j=1}^{K-1}p_j}
 $$
 
 Knowing the first $K-1$ probabilities determines the last one.
@@ -1795,26 +1741,20 @@ so that all logarithms of probability ratios are well defined and finite. This a
 Recall the probability mass function of the categorical distribution:
 
 $$
-P(\mathbf Y=\mathbf y)=
-\prod_{j=1}^{K}p_j^{y_j}
+P(\mathbf Y=\mathbf y)=\prod_{j=1}^{K}p_j^{y_j}
 $$
 
 Take the natural logarithm:
 
 $$
-\ln P(\mathbf Y=\mathbf y)
-=
-\ln\left(\prod_{j=1}^{K}p_j^{y_j}\right)
+\ln P(\mathbf Y=\mathbf y)=\ln\left(\prod_{j=1}^{K}p_j^{y_j}\right)
 $$
 
 Using the properties of logarithms:
 
 $$
 \boxed{
-\ln P(\mathbf Y=\mathbf y)
-=
-\sum_{j=1}^{K}y_j\ln p_j
-}
+\ln P(\mathbf Y=\mathbf y)=\sum_{j=1}^{K}y_j\ln p_j}
 $$
 
 Our goal is to rewrite this expression in the form of a multiparameter exponential family.
@@ -1834,57 +1774,31 @@ $$
 Separate the term corresponding to the reference category:
 
 $$
-\ln P(\mathbf Y=\mathbf y)
-=
-\sum_{j=1}^{K-1}y_j\ln p_j
-+y_K\ln p_K
+\ln P(\mathbf Y=\mathbf y)=\sum_{j=1}^{K-1}y_j\ln p_j+y_K\ln p_K
 $$
 
 Substitute the expression for $y_K$:
 
 $$
-\begin{aligned}
-\ln P(\mathbf Y=\mathbf y)
-&=
-\sum_{j=1}^{K-1}y_j\ln p_j\\
-&\quad+
-\left(1-\sum_{j=1}^{K-1}y_j\right)\ln p_K
-\end{aligned}
+\begin{aligned}\ln P(\mathbf Y=\mathbf y)&=\sum_{j=1}^{K-1}y_j\ln p_j\\&\quad+\left(1-\sum_{j=1}^{K-1}y_j\right)\ln p_K\end{aligned}
 $$
 
 Expanding:
 
 $$
-\begin{aligned}
-\ln P(\mathbf Y=\mathbf y)
-&=
-\sum_{j=1}^{K-1}y_j\ln p_j
-+\ln p_K\\
-&\quad-
-\sum_{j=1}^{K-1}y_j\ln p_K
-\end{aligned}
+\begin{aligned}\ln P(\mathbf Y=\mathbf y)&=\sum_{j=1}^{K-1}y_j\ln p_j+\ln p_K\\&\quad-\sum_{j=1}^{K-1}y_j\ln p_K\end{aligned}
 $$
 
 Collect the terms involving $y_j$:
 
 $$
-\ln P(\mathbf Y=\mathbf y)
-=
-\sum_{j=1}^{K-1}
-y_j(\ln p_j-\ln p_K)
-+\ln p_K
+\ln P(\mathbf Y=\mathbf y)=\sum_{j=1}^{K-1}y_j(\ln p_j-\ln p_K)+\ln p_K
 $$
 
 Applying the logarithm-of-a-ratio identity:
 
 $$
-\boxed{
-\ln P(\mathbf Y=\mathbf y)
-=
-\sum_{j=1}^{K-1}
-y_j\ln\left(\frac{p_j}{p_K}\right)
-+\ln p_K
-}
+\boxed{\ln P(\mathbf Y=\mathbf y)=\sum_{j=1}^{K-1}y_j\ln\left(\frac{p_j}{p_K}\right)+\ln p_K}
 $$
 
 This expression is analogous to the one obtained for the Bernoulli distribution.
@@ -1898,25 +1812,13 @@ $$
 In the categorical case, we can instead identify one natural parameter for each of the first $K-1$ categories:
 
 $$
-\boxed{
-\theta_j=
-\ln\left(\frac{p_j}{p_K}\right),
-\qquad j=1,\ldots,K-1
-}
+\boxed{\theta_j=\ln\left(\frac{p_j}{p_K}\right),\qquad j=1,\ldots,K-1}
 $$
 
 We thus obtain a vector of natural parameters:
 
 $$
-\boxed{
-\boldsymbol\theta=
-\begin{pmatrix}
-\theta_1\\
-\theta_2\\
-\vdots\\
-\theta_{K-1}
-\end{pmatrix}
-}
+\boxed{\boldsymbol\theta=\begin{pmatrix}\theta_1\\\theta_2\\\vdots\\\theta_{K-1}\end{pmatrix}}
 $$
 
 where:
@@ -1948,9 +1850,7 @@ $$
 Multiplying by $p_K$:
 
 $$
-\boxed{
-p_j=p_Ke^{\theta_j}
-}
+\boxed{p_j=p_Ke^{\theta_j}}
 $$
 
 This relationship allows us to express the probability of each category relative to that of the reference category.
@@ -1984,19 +1884,13 @@ $$
 Factor out $p_K$:
 
 $$
-p_K\left(
-1+\sum_{j=1}^{K-1}e^{\theta_j}
-\right)=1
+p_K\left(1+\sum_{j=1}^{K-1}e^{\theta_j}\right)=1
 $$
 
 Hence:
 
 $$
-\boxed{
-p_K=
-\frac{1}
-{1+\sum_{j=1}^{K-1}e^{\theta_j}}
-}
+\boxed{p_K=\frac{1}{1+\sum_{j=1}^{K-1}e^{\theta_j}}}
 $$
 
 We have now expressed the probability of the reference category as a function of the $K-1$ natural parameters.
@@ -2012,22 +1906,13 @@ $$
 Substitute the expression just derived for $p_K$:
 
 $$
-p_j=
-\left(
-\frac{1}
-{1+\sum_{h=1}^{K-1}e^{\theta_h}}
-\right)e^{\theta_j}
+p_j=\left(\frac{1}{1+\sum_{h=1}^{K-1}e^{\theta_h}}\right)e^{\theta_j}
 $$
 
 Moving the exponential factor to the numerator:
 
 $$
-\boxed{
-p_j=
-\frac{e^{\theta_j}}
-{1+\sum_{h=1}^{K-1}e^{\theta_h}},
-\qquad j=1,\ldots,K-1
-}
+\boxed{p_j=\frac{e^{\theta_j}}{1+\sum_{h=1}^{K-1}e^{\theta_h}},\qquad j=1,\ldots,K-1}
 $$
 
 The index $j$ identifies the category whose probability we want to calculate, while $h$ is the summation index used to include the contributions from all non-reference categories.
@@ -2039,75 +1924,43 @@ The probabilities therefore share the same denominator.
 Recall the log-probability derived in the previous section:
 
 $$
-\ln P(\mathbf Y=\mathbf y)
-=
-\sum_{j=1}^{K-1}y_j\theta_j+\ln p_K
+\ln P(\mathbf Y=\mathbf y)=\sum_{j=1}^{K-1}y_j\theta_j+\ln p_K
 $$
 
 Since:
 
 $$
-p_K=
-\frac{1}
-{1+\sum_{j=1}^{K-1}e^{\theta_j}}
+p_K=\frac{1}{1+\sum_{j=1}^{K-1}e^{\theta_j}}
 $$
 
 taking the logarithm gives:
 
 $$
-\ln p_K=
--\ln\left(
-1+\sum_{j=1}^{K-1}e^{\theta_j}
-\right)
+\ln p_K=-\ln\left(1+\sum_{j=1}^{K-1}e^{\theta_j}\right)
 $$
 
 Substituting:
 
 $$
-\begin{aligned}
-\ln P(\mathbf Y=\mathbf y)
-&=
-\sum_{j=1}^{K-1}y_j\theta_j\\
-&\quad-
-\ln\left(
-1+\sum_{j=1}^{K-1}e^{\theta_j}
-\right)
-\end{aligned}
+\begin{aligned}\ln P(\mathbf Y=\mathbf y)&=\sum_{j=1}^{K-1}y_j\theta_j\\&\quad-\ln\left(1+\sum_{j=1}^{K-1}e^{\theta_j}\right)\end{aligned}
 $$
 
 We identify the **multivariate cumulant function**:
 
 $$
-\boxed{
-A(\boldsymbol\theta)=
-\ln\left(
-1+\sum_{j=1}^{K-1}e^{\theta_j}
-\right)
-}
+\boxed{A(\boldsymbol\theta)=\ln\left(1+\sum_{j=1}^{K-1}e^{\theta_j}\right)}
 $$
 
 The probability mass function can therefore be expressed as:
 
 $$
-\boxed{
-P(\mathbf Y=\mathbf y)=
-\exp\left[
-\sum_{j=1}^{K-1}y_j\theta_j
--A(\boldsymbol\theta)
-\right]
-}
+\boxed{P(\mathbf Y=\mathbf y)=\exp\left[\sum_{j=1}^{K-1}y_j\theta_j-A(\boldsymbol\theta)\right]}
 $$
 
 Or, using the dot product:
 
 $$
-\boxed{
-P(\mathbf Y=\mathbf y)=
-\exp\left[
-\mathbf y_{1:K-1}^{\top}\boldsymbol\theta
--A(\boldsymbol\theta)
-\right]
-}
+\boxed{P(\mathbf Y=\mathbf y)=\exp\left[\mathbf y_{1:K-1}^{\top}\boldsymbol\theta-A(\boldsymbol\theta)\right]}
 $$
 
 where $\mathbf y_{1:K-1}$ denotes the vector formed by the first $K-1$ components of the one-hot encoding.
@@ -2137,21 +1990,13 @@ Ordinary derivatives are therefore replaced by the **gradient** and the **Hessia
 For the exponential-family representation just derived, we have:
 
 $$
-\boxed{
-\mathbb E[\mathbf Y_{1:K-1}]
-=
-\nabla A(\boldsymbol\theta)
-}
+\boxed{\mathbb E[\mathbf Y_{1:K-1}]=\nabla A(\boldsymbol\theta)}
 $$
 
 and:
 
 $$
-\boxed{
-\mathrm{Cov}(\mathbf Y_{1:K-1})
-=
-\nabla^2 A(\boldsymbol\theta)
-}
+\boxed{\mathrm{Cov}(\mathbf Y_{1:K-1})=\nabla^2 A(\boldsymbol\theta)}
 $$
 
 These relationships are the multivariate generalization of the properties already studied for the Bernoulli distribution. In this exponential-family form, the scale factor is one, so the term $a(\phi)$ from the general GLM variance formula does not appear.
@@ -2161,66 +2006,37 @@ These relationships are the multivariate generalization of the properties alread
 We have:
 
 $$
-A(\boldsymbol\theta)=
-\ln\left(
-1+\sum_{h=1}^{K-1}e^{\theta_h}
-\right)
+A(\boldsymbol\theta)=\ln\left(1+\sum_{h=1}^{K-1}e^{\theta_h}\right)
 $$
 
 Calculate the partial derivative with respect to $\theta_j$:
 
 $$
-\frac{\partial A}{\partial\theta_j}
-=
-\frac{\partial}{\partial\theta_j}
-\ln\left(
-1+\sum_{h=1}^{K-1}e^{\theta_h}
-\right)
+\frac{\partial A}{\partial\theta_j}=\frac{\partial}{\partial\theta_j}\ln\left(1+\sum_{h=1}^{K-1}e^{\theta_h}\right)
 $$
 
 Applying the chain rule:
 
 $$
-\frac{\partial A}{\partial\theta_j}
-=
-\frac{
-\frac{\partial}{\partial\theta_j}
-\left(1+\sum_{h=1}^{K-1}e^{\theta_h}\right)
-}{
-1+\sum_{h=1}^{K-1}e^{\theta_h}
-}
+\frac{\partial A}{\partial\theta_j}=\frac{\frac{\partial}{\partial\theta_j}\left(1+\sum_{h=1}^{K-1}e^{\theta_h}\right)}{1+\sum_{h=1}^{K-1}e^{\theta_h}}
 $$
 
 Since only the term with $h=j$ in the sum depends on $\theta_j$:
 
 $$
-\frac{\partial A}{\partial\theta_j}
-=
-\frac{e^{\theta_j}}
-{1+\sum_{h=1}^{K-1}e^{\theta_h}}
+\frac{\partial A}{\partial\theta_j}=\frac{e^{\theta_j}}{1+\sum_{h=1}^{K-1}e^{\theta_h}}
 $$
 
 We recognize the probability $p_j$ derived earlier:
 
 $$
-\boxed{
-\frac{\partial A}{\partial\theta_j}=p_j
-}
+\boxed{\frac{\partial A}{\partial\theta_j}=p_j}
 $$
 
 Therefore:
 
 $$
-\boxed{
-\nabla A(\boldsymbol\theta)
-=
-\begin{pmatrix}
-p_1\\
-p_2\\
-\vdots\\
-p_{K-1}
-\end{pmatrix}
-}
+\boxed{\nabla A(\boldsymbol\theta)=\begin{pmatrix}p_1\\p_2\\\vdots\\p_{K-1}\end{pmatrix}}
 $$
 
 This result is consistent with the definition of the indicator variables.
@@ -2256,10 +2072,7 @@ $$
 we have:
 
 $$
-\frac{\partial^2 A}
-{\partial\theta_h\partial\theta_j}
-=
-\frac{\partial p_j}{\partial\theta_h}
+\frac{\partial^2 A}{\partial\theta_h\partial\theta_j}=\frac{\partial p_j}{\partial\theta_h}
 $$
 
 Recall that:
@@ -2277,11 +2090,7 @@ We distinguish two cases.
 Differentiating with respect to $\theta_j$:
 
 $$
-\frac{\partial p_j}{\partial\theta_j}
-=
-\frac{
-e^{\theta_j}\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)
--e^{2\theta_j}
+\frac{\partial p_j}{\partial\theta_j}=\frac{e^{\theta_j}\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)-e^{2\theta_j}
 }{
 \left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)^2
 }
@@ -2303,13 +2112,7 @@ In this case, the numerator $e^{\theta_j}$ does not depend on $\theta_h$.
 Applying the quotient rule:
 
 $$
-\frac{\partial p_j}{\partial\theta_h}
-=
--\frac{
-e^{\theta_j}e^{\theta_h}
-}{
-\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)^2
-}
+\frac{\partial p_j}{\partial\theta_h}=-\frac{e^{\theta_j}e^{\theta_h}}{\left(1+\sum_{r=1}^{K-1}e^{\theta_r}\right)^2}
 $$
 
 Therefore:
@@ -2334,12 +2137,7 @@ $$
 We obtain:
 
 $$
-\boxed{
-\frac{\partial^2 A}
-{\partial\theta_j\partial\theta_h}
-=
-p_j(\delta_{jh}-p_h)
-}
+\boxed{\frac{\partial^2 A}{\partial\theta_j\partial\theta_h}=p_j(\delta_{jh}-p_h)}
 $$
 
 This expression gives the entries of the covariance matrix of the indicator vector.
@@ -2361,13 +2159,7 @@ The negative covariances reflect the mutually exclusive nature of the categories
 The matrix can be written in compact form:
 
 $$
-\boxed{
-\mathrm{Cov}(\mathbf Y_{1:K-1})
-=
-\mathrm{diag}(\mathbf p_{1:K-1})
--
-\mathbf p_{1:K-1}\mathbf p_{1:K-1}^{\top}
-}
+\boxed{\mathrm{Cov}(\mathbf Y_{1:K-1})=\mathrm{diag}(\mathbf p_{1:K-1})-\mathbf p_{1:K-1}\mathbf p_{1:K-1}^{\top}}
 $$
 
 This result highlights how the multivariate cumulant function encodes both the category probabilities and the structure of their dependencies.
@@ -2466,9 +2258,7 @@ $$
 The cumulant function is:
 
 $$
-A(\boldsymbol\theta)
-=
-\ln(1+e^{\theta_1}+e^{\theta_2})
+A(\boldsymbol\theta)=\ln(1+e^{\theta_1}+e^{\theta_2})
 $$
 
 Substituting:
@@ -2494,33 +2284,25 @@ $$
 the exponential-family representation gives:
 
 $$
-P(\mathbf Y=\mathbf y)
-=
-\exp[y_1\theta_1+y_2\theta_2-A(\boldsymbol\theta)]
+P(\mathbf Y=\mathbf y)=\exp[y_1\theta_1+y_2\theta_2-A(\boldsymbol\theta)]
 $$
 
 Substituting:
 
 $$
-P(\mathbf Y=(0,1,0))
-=
-\exp[0\cdot\ln2+1\cdot\ln3-\ln6]
+P(\mathbf Y=(0,1,0))=\exp[0\cdot\ln2+1\cdot\ln3-\ln6]
 $$
 
 Thus:
 
 $$
-P(\mathbf Y=(0,1,0))
-=
-e^{\ln3-\ln6}
+P(\mathbf Y=(0,1,0))=e^{\ln3-\ln6}
 $$
 
 and finally:
 
 $$
-\boxed{
-P(\mathbf Y=(0,1,0))=\frac36=\frac12
-}
+\boxed{P(\mathbf Y=(0,1,0))=\frac36=\frac12}
 $$
 
 We have verified that the exponential-family representation correctly reproduces the probability of the observed category.
@@ -2568,17 +2350,13 @@ $$
 We also showed that:
 
 $$
-\mathbb E[\mathbf Y_{1:K-1}]
-=
-\nabla A(\boldsymbol\theta)
+\mathbb E[\mathbf Y_{1:K-1}]=\nabla A(\boldsymbol\theta)
 $$
 
 and:
 
 $$
-\mathrm{Cov}(\mathbf Y_{1:K-1})
-=
-\nabla^2A(\boldsymbol\theta)
+\mathrm{Cov}(\mathbf Y_{1:K-1})=\nabla^2A(\boldsymbol\theta)
 $$
 
 **The key result is that the categorical distribution can be represented using $K-1$ log-ratios of probabilities**, rather than a single logit as in the Bernoulli case.
@@ -2791,19 +2569,14 @@ $$
 the denominator of the probabilities can be rewritten as:
 
 $$
-1+\sum_{h=1}^{K-1}e^{\eta_h}
-=
-\sum_{h=1}^{K}e^{z_h}
+1+\sum_{h=1}^{K-1}e^{\eta_h}=\sum_{h=1}^{K}e^{z_h}
 $$
 
 Consequently, we can use a single expression for all $K$ categories:
 
 $$
 \boxed{
-p_j=\mathrm{softmax}(\mathbf z)_j
-=
-\frac{e^{z_j}}{\sum_{h=1}^{K}e^{z_h}}
-}
+p_j=\mathrm{softmax}(\mathbf z)_j=\frac{e^{z_j}}{\sum_{h=1}^{K}e^{z_h}}}
 $$
 
 This is the **softmax function**.
@@ -2818,12 +2591,7 @@ $$
 where:
 
 $$
-\Delta_{K-1}^{\circ}
-=
-\left\{
-\mathbf p\in\mathbb R^K:
-p_j>0,\ \sum_{j=1}^{K}p_j=1
-\right\}
+\Delta_{K-1}^{\circ}=\left\{\mathbf p\in\mathbb R^K:p_j>0,\ \sum_{j=1}^{K}p_j=1\right\}
 $$
 
 denotes the relative interior of the probability simplex for $K$ categories.
@@ -2949,11 +2717,7 @@ $$
 We have shown that:
 
 $$
-\boxed{
-\mathrm{softmax}(\mathbf z+c\mathbf1)
-=
-\mathrm{softmax}(\mathbf z)
-}
+\boxed{\mathrm{softmax}(\mathbf z+c\mathbf1)=\mathrm{softmax}(\mathbf z)}
 $$
 
 This property is called **translation invariance**.
@@ -2965,21 +2729,13 @@ It means that adding or subtracting the same quantity from every logit does not 
 Consider the ratio of the probabilities of two categories, $j$ and $h$:
 
 $$
-\frac{p_j}{p_h}
-=
-\frac{
-e^{z_j}/\sum_{r=1}^{K}e^{z_r}
-}{
-e^{z_h}/\sum_{r=1}^{K}e^{z_r}
-}
+\frac{p_j}{p_h}=\frac{e^{z_j}/\sum_{r=1}^{K}e^{z_r}}{e^{z_h}/\sum_{r=1}^{K}e^{z_r}}
 $$
 
 The denominators cancel:
 
 $$
-\frac{p_j}{p_h}
-=
-\frac{e^{z_j}}{e^{z_h}}
+\frac{p_j}{p_h}=\frac{e^{z_j}}{e^{z_h}}
 $$
 
 Therefore:
@@ -3043,9 +2799,7 @@ $$
 The final component is now zero, but:
 
 $$
-\mathrm{softmax}(\mathbf z')
-=
-\mathrm{softmax}(\mathbf z)
+\mathrm{softmax}(\mathbf z')=\mathrm{softmax}(\mathbf z)
 $$
 
 **We are not assuming that the original logit of category $K$ is zero: we are choosing an equivalent representation of the same distribution.**
@@ -3162,10 +2916,7 @@ $$
 Indeed, in the reference-category representation:
 
 $$
-p_K=
-\frac{e^0}{\sum_{h=1}^{K}e^{z_h}}
-=
-\frac{1}{\sum_{h=1}^{K}e^{z_h}}
+p_K=\frac{e^0}{\sum_{h=1}^{K}e^{z_h}}=\frac{1}{\sum_{h=1}^{K}e^{z_h}}
 $$
 
 and this probability is strictly positive for finite logits.
@@ -3314,11 +3065,7 @@ $$
 We therefore obtain:
 
 $$
-\boxed{
-\mathrm{softmax}(5,4,3)
-=
-\mathrm{softmax}(2,1,0)
-}
+\boxed{\mathrm{softmax}(5,4,3)=\mathrm{softmax}(2,1,0)}
 $$
 
 This example confirms that the probabilities depend on differences between logits, not on their absolute values.
@@ -3396,11 +3143,7 @@ The logistic function is therefore the special case of the softmax with two cate
 We can summarize this relationship as:
 
 $$
-\boxed{
-\mathrm{softmax}((z_1,z_2))_1
-=
-\sigma(z_1-z_2)
-}
+\boxed{\mathrm{softmax}((z_1,z_2))_1=\sigma(z_1-z_2)}
 $$
 
 This equivalence shows that binary and multinomial logistic regression share the same underlying probabilistic structure.
@@ -3414,8 +3157,7 @@ A similar property holds in multinomial logistic regression, although the compar
 Recall:
 
 $$
-\ln\left(\frac{p_j}{p_K}\right)
-=x^\top\beta_j
+\ln\left(\frac{p_j}{p_K}\right)=x^\top\beta_j
 $$
 
 Suppose the model includes a covariate $x_r$ with coefficient $\beta_{jr}$ associated with category $j$.
@@ -3613,11 +3355,7 @@ The function $f_\psi$ may include multiple transformation layers, activation fun
 The final probabilities are still obtained through:
 
 $$
-\boxed{
-P(Y=j\mid x,\psi)
-=
-\mathrm{softmax}(f_\psi(x))_j
-}
+\boxed{P(Y=j\mid x,\psi)=\mathrm{softmax}(f_\psi(x))_j}
 $$
 
 The fundamental difference from classical multinomial logistic regression therefore lies in how the logits are parameterized.
@@ -3667,11 +3405,7 @@ $$
 The joint probability of the entire sequence can be factorized using the chain rule of probability:
 
 $$
-\boxed{
-P(w_1,\ldots,w_T)
-=
-\prod_{t=1}^{T}P(w_t\mid w_{\lt t})
-}
+\boxed{P(w_1,\ldots,w_T)=\prod_{t=1}^{T}P(w_t\mid w_{\lt t})}
 $$
 
 For the first token, we assume an initial context, possibly represented by a special *beginning-of-sequence* (BOS) token. If there is no explicit initial token, the first factor is interpreted as the probability of the first token given an empty context. Termination can also be modeled by including a special end-of-sequence token.
@@ -3725,11 +3459,7 @@ we obtain a probability distribution over the vocabulary for a given token seque
 Under the convention adopted in our decoder-only Transformer, the representation $h_t$ uses the tokens up to and including position $t$. Consequently, the logits at position $t$ predict the **next** token, at position $t+1$:
 
 $$
-\boxed{
-p_{tj}
-=
-P(w_{t+1}=j\mid w_{\leq t},\psi)
-}
+\boxed{p_{tj}=P(w_{t+1}=j\mid w_{\leq t},\psi)}
 $$
 
 ### Example: Next-Token Prediction
@@ -3931,9 +3661,7 @@ Let us return to multiclass classification.
 In Chapter 4, we derived the probability mass function of the categorical distribution:
 
 $$
-P(\mathbf Y=\mathbf y)
-=
-\prod_{j=1}^{K}p_j^{y_j}
+P(\mathbf Y=\mathbf y)=\prod_{j=1}^{K}p_j^{y_j}
 $$
 
 where $\mathbf y$ denotes a one-hot encoding.
@@ -3941,9 +3669,7 @@ where $\mathbf y$ denotes a one-hot encoding.
 For a single observation, the model **likelihood** is:
 
 $$
-L(\psi;\mathbf y,x)
-=
-\prod_{j=1}^{K}p_j(x;\psi)^{y_j}
+L(\psi;\mathbf y,x)=\prod_{j=1}^{K}p_j(x;\psi)^{y_j}
 $$
 
 The parameter $\psi$ can represent the coefficients of multinomial logistic regression or, more generally, the parameters of a neural network.
@@ -3951,9 +3677,7 @@ The parameter $\psi$ can represent the coefficients of multinomial logistic regr
 Taking the natural logarithm:
 
 $$
-\ell(\psi)
-=
-\ln L(\psi;\mathbf y,x)
+\ell(\psi)=\ln L(\psi;\mathbf y,x)
 $$
 
 We obtain:
@@ -3997,19 +3721,13 @@ We obtain:
 $$
 \ell=
 \sum_{j=1}^{K}
-y_j\left[
-z_j-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)
-\right]
+y_j\left[z_j-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)\right]
 $$
 
 Distributing the summation:
 
 $$
-\ell=
-\sum_{j=1}^{K}y_jz_j
--
-\sum_{j=1}^{K}y_j
-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)
+\ell=\sum_{j=1}^{K}y_jz_j-\sum_{j=1}^{K}y_j\ln\left(\sum_{h=1}^{K}e^{z_h}\right)
 $$
 
 Since the one-hot representation satisfies:
@@ -4021,12 +3739,7 @@ $$
 we obtain:
 
 $$
-\boxed{
-\ell=
-\sum_{j=1}^{K}y_jz_j
--
-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)
-}
+\boxed{\ell=\sum_{j=1}^{K}y_jz_j-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)}
 $$
 
 Maximum likelihood estimation consists of finding the parameters that maximize this expression over the available observations.
@@ -4046,10 +3759,7 @@ $$
 We obtain:
 
 $$
-\boxed{
-\mathcal L=
--\sum_{j=1}^{K}y_j\ln p_j
-}
+\boxed{\mathcal L=-\sum_{j=1}^{K}y_j\ln p_j}
 $$
 
 This expression is the **categorical cross-entropy** between the empirical distribution represented by the one-hot vector and the distribution predicted by the model.
@@ -4087,24 +3797,13 @@ Assuming conditional independence, their joint likelihood is the product of the 
 The mean negative log-likelihood becomes:
 
 $$
-\boxed{
-\mathcal L_{\mathrm{media}}
-=
--\frac1n
-\sum_{i=1}^{n}
-\sum_{j=1}^{K}
-y_{ij}\ln p_{ij}
-}
+\boxed{\mathcal L_{\mathrm{media}}=-\frac1n\sum_{i=1}^{n}\sum_{j=1}^{K}y_{ij}\ln p_{ij}}
 $$
 
 Therefore:
 
 $$
-\boxed{
-\arg\min_\psi\mathcal L_{\mathrm{media}}(\psi)
-=
-\arg\max_\psi\ell_{\mathrm{totale}}(\psi)
-}
+\boxed{\arg\min_\psi\mathcal L_{\mathrm{media}}(\psi)=\arg\max_\psi\ell_{\mathrm{totale}}(\psi)}
 $$
 
 subject to the same constraints and in the absence of additional regularization terms, **provided the optima are actually attained**. Otherwise, the objective of maximizing the log-likelihood is still equivalent to minimizing its negative.
@@ -4118,19 +3817,14 @@ In language modeling, the same construction is applied at different positions in
 If the correct token at position $t$ is $w_t$, the corresponding loss is:
 
 $$
-\mathcal L_t=
--\ln P(w_t\mid w_{\lt t},\psi)
+\mathcal L_t=-\ln P(w_t\mid w_{\lt t},\psi)
 $$
 
 Summing over the positions considered:
 
 $$
 \boxed{
-\mathcal L_{\mathrm{sequenza}}
-=
--\sum_{t=1}^{T}
-\ln P(w_t\mid w_{\lt t},\psi)
-}
+\mathcal L_{\mathrm{sequenza}}=-\sum_{t=1}^{T}\ln P(w_t\mid w_{\lt t},\psi)}
 $$
 
 This expression follows directly from the autoregressive factorization of the joint sequence probability. Here the loss is indexed by the **token to be predicted**, $w_t$, whereas in Section 6.2 the logits $\mathbf z_t$ are indexed by the **input position** that predicts $w_{t+1}$. The two conventions are consistent as long as the one-token shift is maintained.
@@ -4211,8 +3905,7 @@ We obtain:
 
 $$
 \frac{\partial}{\partial z_k}
-\ln\left(\sum_{h=1}^{K}e^{z_h}\right)
-=
+\ln\left(\sum_{h=1}^{K}e^{z_h}\right)=
 \frac{e^{z_k}}{\sum_{h=1}^{K}e^{z_h}}
 $$
 
@@ -4221,8 +3914,7 @@ $$
 Combining the two contributions:
 
 $$
-\frac{\partial\mathcal L}{\partial z_k}
-=
+\frac{\partial\mathcal L}{\partial z_k}=
 -y_k+
 \frac{e^{z_k}}{\sum_{h=1}^{K}e^{z_h}}
 $$
@@ -4247,8 +3939,7 @@ In vector form:
 
 $$
 \boxed{
-\nabla_{\mathbf z}\mathcal L
-=
+\nabla_{\mathbf z}\mathcal L=
 \mathbf p-\mathbf y
 }
 $$
@@ -4291,8 +3982,7 @@ $$
 Consequently:
 
 $$
-\nabla_{\mathbf z}\mathcal L
-=
+\nabla_{\mathbf z}\mathcal L=
 \nabla A(\mathbf z)-\mathbf y
 $$
 
@@ -4358,8 +4048,7 @@ The loss depends on $\beta_j$ through the logits. Since $\beta_j$ is a **vector*
 The multivariate chain rule gives:
 
 $$
-\nabla_{\beta_j}\mathcal L_i
-=
+\nabla_{\beta_j}\mathcal L_i=
 \sum_{k=1}^{K}
 \frac{\partial\mathcal L_i}{\partial z_{ik}}
 \nabla_{\beta_j}z_{ik}
@@ -4370,8 +4059,7 @@ In the linear model considered here, each logit $z_{ik}$ depends only on the coe
 Therefore:
 
 $$
-\nabla_{\beta_j}z_{ik}
-=
+\nabla_{\beta_j}z_{ik}=
 \begin{cases}
 x_i & \text{if }k=j\\
 0 & \text{if }k\neq j
@@ -4381,8 +4069,7 @@ $$
 Only the term with $k=j$ remains in the sum:
 
 $$
-\nabla_{\beta_j}\mathcal L_i
-=
+\nabla_{\beta_j}\mathcal L_i=
 \frac{\partial\mathcal L_i}{\partial z_{ij}}
 \nabla_{\beta_j}z_{ij}
 $$
@@ -4404,8 +4091,7 @@ we obtain:
 
 $$
 \boxed{
-\nabla_{\beta_j}\mathcal L_i
-=
+\nabla_{\beta_j}\mathcal L_i=
 (p_{ij}-y_{ij})x_i
 }
 $$
@@ -4415,16 +4101,14 @@ $$
 The mean loss over $n$ observations is:
 
 $$
-\mathcal L_{\mathrm{media}}
-=
+\mathcal L_{\mathrm{media}}=
 \frac1n\sum_{i=1}^{n}\mathcal L_i
 $$
 
 Differentiating with respect to $\beta_j$:
 
 $$
-\nabla_{\beta_j}\mathcal L_{\mathrm{media}}
-=
+\nabla_{\beta_j}\mathcal L_{\mathrm{media}}=
 \frac1n\sum_{i=1}^{n}
 \nabla_{\beta_j}\mathcal L_i
 $$
@@ -4433,8 +4117,7 @@ Substituting the previous result:
 
 $$
 \boxed{
-\nabla_{\beta_j}\mathcal L_{\mathrm{media}}
-=
+\nabla_{\beta_j}\mathcal L_{\mathrm{media}}=
 \frac1n\sum_{i=1}^{n}
 (p_{ij}-y_{ij})x_i
 }
@@ -4456,8 +4139,7 @@ Applying the chain rule:
 
 $$
 \boxed{
-\nabla_\psi\mathcal L_i
-=
+\nabla_\psi\mathcal L_i=
 \sum_{j=1}^{K}
 (p_{ij}-y_{ij})\nabla_\psi z_{ij}
 }
@@ -4473,8 +4155,7 @@ For classical gradient descent:
 
 $$
 \boxed{
-\psi^{(t+1)}
-=
+\psi^{(t+1)}=
 \psi^{(t)}-\alpha\nabla_\psi\mathcal L
 }
 $$
@@ -4518,16 +4199,14 @@ $$
 The gradient with respect to the logits is:
 
 $$
-\nabla_{\mathbf z}\mathcal L
-=
+\nabla_{\mathbf z}\mathcal L=
 \mathbf p-\mathbf y
 $$
 
 Substituting:
 
 $$
-\nabla_{\mathbf z}\mathcal L
-=
+\nabla_{\mathbf z}\mathcal L=
 (0.7,\ 0.2,\ 0.1)-(1,\ 0,\ 0)
 $$
 
@@ -4535,8 +4214,7 @@ Therefore:
 
 $$
 \boxed{
-\nabla_{\mathbf z}\mathcal L
-=
+\nabla_{\mathbf z}\mathcal L=
 (-0.3,\ 0.2,\ 0.1)
 }
 $$
@@ -4730,8 +4408,7 @@ Applying the softmax, we obtain:
 
 $$
 \boxed{
-P(Y=j\mid x,\psi)
-=
+P(Y=j\mid x,\psi)=
 \frac{e^{z_j}}{\sum_{h=1}^{K}e^{z_h}}
 }
 $$
@@ -4813,8 +4490,7 @@ Assuming conditionally independent observations, we can construct the likelihood
 
 $$
 \boxed{
-L(\beta;\mathcal D)
-=
+L(\beta;\mathcal D)=
 \prod_{i=1}^{n}
 f(y_i\mid x_i,\beta)
 }
@@ -4832,8 +4508,7 @@ The maximum likelihood estimator is defined as:
 
 $$
 \boxed{
-\hat\beta_{\mathrm{MLE}}
-=
+\hat\beta_{\mathrm{MLE}}=
 \arg\max_\beta L(\beta;\mathcal D)
 }
 $$
@@ -4841,8 +4516,7 @@ $$
 Equivalently, we can maximize the log-likelihood:
 
 $$
-\hat\beta_{\mathrm{MLE}}
-=
+\hat\beta_{\mathrm{MLE}}=
 \arg\max_\beta\ell(\beta)
 $$
 
