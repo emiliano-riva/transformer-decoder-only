@@ -67,7 +67,7 @@ PyTorch can run on CPU. If CUDA is available, the example uses it automatically.
 
 ### Mathematical deep dives
 
-- [From logits to softmax: an introductory mathematical treatment](docs/deep-dives/from-logits-to-softmax.md)
+- [From logits to softmax: an introductory mathematical treatment](docs/deep-dives/from-logits-to-softmax/00_README.md)
 - [Backpropagation: outline for a future chapter](docs/deep-dives/backpropagation.md)
 
 All mathematical expressions use standard Markdown with `$...$` and `$$...$$` delimiters, which can be used in Obsidian and Markdown renderers supporting math. Relative links work directly on GitHub.
