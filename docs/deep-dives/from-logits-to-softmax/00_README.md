@@ -4,7 +4,7 @@ Statistical Foundations and Applications in Neural Networks
 
 ## Contents of the complete tutorial
 
-- **[Introduction](docs/deep-dives/from-logits-to-softmax/01-introduction.md):** what softmax is, where it is used, and the aims of this tutorial.
+- **[Introduction](01-introduction.md):** what softmax is, where it is used, and the aims of this tutorial.
 - **1. Generalized Linear Models:** from the classical linear model to the three components of a GLM.
 - **2. The exponential family and the canonical link:** general form, cumulant function, mean, variance, and choice of link.
 - **3. From Bernoulli to logistic regression:** natural parameter, logit, sigmoid, odds, and interpretation of coefficients.
