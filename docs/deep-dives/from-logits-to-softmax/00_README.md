@@ -29,7 +29,7 @@ Finally, we will examine the relationship between the multinomial likelihood, cr
 ## Contents of the complete tutorial
 
 - **[1. Generalized Linear Models](01-generalized-linear-models.md):** from the classical linear model to the three components of a GLM.
-- **[2. The exponential family and the canonical link](02-exponential-families-and-canonocal-link.md):** general form, cumulant function, mean, variance, and choice of link.
+- **[2. The exponential family and the canonical link](02-exponential-families-and-canonical-link.md):** general form, cumulant function, mean, variance, and choice of link.
 - **[3. From Bernoulli to logistic regression](03-bernoulli-logistic-regression.md):** natural parameter, logit, sigmoid, odds, and interpretation of coefficients.
 - **[4. Generalization to the multinomial distribution](04-multinomial-distribution.md):** one-hot encoding, $K-1$ natural parameters, exponential-family form, and cumulant function.
 - **[5. Deriving the softmax function](05-softmax-derivation,md):** inversion of the link, reference category, invariance, and examples.
